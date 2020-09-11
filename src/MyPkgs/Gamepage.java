@@ -2,9 +2,9 @@ package MyPkgs;
 
 import java.util.Random;
 
-import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Buttons;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
@@ -20,7 +20,13 @@ import com.badlogic.gdx.math.Rectangle;
 /**
  * 游戏主程序的入口类, 实现 ApplicationListener 接口
  */
-public class MainGame implements ApplicationListener {
+public class Gamepage implements Screen {
+	private Terminal terminal;
+
+	public Gamepage(Terminal t) {
+		terminal = t;
+	}
+
 	private float setTime;
 	private TextureRegion animationRegion;
 	private Animation flyingBird;
@@ -47,7 +53,8 @@ public class MainGame implements ApplicationListener {
 	private Sprite bg, bird, up, dw;
 
 	@Override
-	public void create() {
+	public void show() {
+
 		setTime = 0;
 		scorelock = true;
 		score = 0;
@@ -97,19 +104,7 @@ public class MainGame implements ApplicationListener {
 	}
 
 	@Override
-	public void resize(int width, int height) {
-	}
-
-	@Override
-	public void resume() {
-	}
-
-	@Override
-	public void pause() {
-	}
-
-	@Override
-	public void render() {
+	public void render(float delta) {
 		/*
 		 * 设置清屏颜色为红色（RGBA）,
 		 * 
@@ -129,7 +124,7 @@ public class MainGame implements ApplicationListener {
 			up.setX(290);
 			dw.setX(290);
 		}
-		setTime += Gdx.graphics.getDeltaTime();
+		setTime += delta;
 		animationRegion = flyingBird.getKeyFrame(setTime);
 
 		birdSpeed += gravity;
@@ -169,19 +164,46 @@ public class MainGame implements ApplicationListener {
 		if (ru.overlaps(rb) || rd.overlaps(rb) || (bird.getY() > 512 || bird.getY() < 0)) {
 			fs.setVolume(fs.play(), 0.1F);
 			Gdx.app.log("Haha", "GameOver");
+			terminal.showEnd();
 
 		}
 //		Gdx.app.log("左键", Gdx.input.isButtonPressed(Buttons.LEFT));
 	}
 
 	@Override
+	public void resize(int width, int height) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void pause() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void resume() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void hide() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
 	public void dispose() {
+		// TODO Auto-generated method stub
 		// 销毁画布,释放空间
-		if (batch != null) {
-			batch.dispose();
+		if (bgm != null) {
+			bgm.dispose();
 		}
 		if (texture != null) {
 			texture.dispose();
 		}
 	}
+
 }
