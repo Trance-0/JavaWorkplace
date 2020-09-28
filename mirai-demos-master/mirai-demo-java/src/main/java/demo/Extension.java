@@ -53,6 +53,15 @@ public class Extension {
 		}
 	}
 
+	public boolean containKeywords(String input, ArrayList<String> temp) {
+		for (int i =0;i<temp.size();i++) {
+			if (input.contains(temp.get(i))) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
 	public boolean containKeywords(String input, String[] keywords) {
 		for (String i : keywords) {
 			if (input.contains(i)) {
@@ -61,6 +70,17 @@ public class Extension {
 		}
 		return false;
 	}
+	
+	public String findType(String msgString,HashMap<ArrayList<String>,String> fl) {
+		String answer="";
+		for (ArrayList<String>temp:fl.keySet()) {
+			if (containKeywords(msgString,temp)) {
+				answer=fl.get(temp);
+			}
+		}
+		return answer;
+	}
+
 
 	public String getResponse(String Status) {
 		return response.get(Status).get(rand.nextInt(response.get(Status).size()));

@@ -1,229 +1,232 @@
-package demo;
-
-import java.io.File;
-import java.io.IOException;
-import java.io.IOException;
-import java.util.concurrent.CancellationException;
-
-import org.jetbrains.annotations.NotNull;
-
-import Arknights.ItemSearch;
-import Arknights.Simulate;
-import Arknights.tagSearch;
-import demo.Extension;
-import kotlin.coroutines.CoroutineContext;
-import kotlinx.coroutines.Job;
-import module.music;
-import net.mamoe.mirai.Bot;
-import net.mamoe.mirai.BotFactoryJvm;
-import net.mamoe.mirai.event.EventHandler;
-import net.mamoe.mirai.event.Events;
-import net.mamoe.mirai.event.ListeningStatus;
-import net.mamoe.mirai.event.SimpleListenerHost;
-import net.mamoe.mirai.message.GroupMessageEvent;
-import net.mamoe.mirai.message.data.At;
-import net.mamoe.mirai.message.data.AtAll;
-import net.mamoe.mirai.message.data.Image;
-import net.mamoe.mirai.message.data.MessageChain;
-import net.mamoe.mirai.message.data.MessageUtils;
-import net.mamoe.mirai.network.LoginFailedException;
-import net.mamoe.mirai.message.data.QuoteReply;
-import net.mamoe.mirai.utils.BotConfiguration;
-
-public class BlockingTest {
-
-	private final static String[] Item = { "ÍªÄı¼¯×é", "³ãºÏ½ğ¿é", "Äı½º", "ÆÆËğ×°ÖÃ", "×°ÖÃ", "Ë«Íª", "õ¥Ô­ÁÏ", "ÑĞÄ¥Ê¯", "ÎåË®ÑĞÄ¥Ê¯", "³ãºÏ½ğ",
-			"ÍªÕóÁĞ", "Å¤×ª´¼", "ÇáÃÌ¿ó", "¸ÄÁ¼×°ÖÃ", "Ô­ÑÒ", "¹ÌÔ­ÑÒ×é", "Ìá´¿Ô­ÑÒ", "¹ÌÔ­ÑÒ", "ÒìÌú", "ÒìÌú¿é", "ÒìÌú×é", "ÒìÌúËéÆ¬", "¾ÛËáõ¥", "¾ÛËáõ¥×é", "ÍªÄı¼¯",
-			"¾ÛºÏÄı½º", "RMA70-12", "RMA70-24", "ÌÇ", "ÌÇ¾Û¿é", "ÌÇ×é", "´úÌÇ", "ÈıË®ÃÌ¿ó", "°×Âí´¼" };
-	private final static String[] arknights10 = { "Ê®Á¬", "²âÅ·Æø", "¸ÉÔ±Ñ°·Ã", "Ñ°·Ã¸ÉÔ±", "ÕĞÄ¼¸ÉÔ±", "³é±£µ×", "10Á¬" };
-	private final static String[] arknights1 = { "µ¥³é", "Ò»Á¬" };
-	private final static String[] arknights100 = { "Ò»°ÙÁ¬", "100Á¬", "±£µ×ÁùĞÇ" };
-	private final static String[] tagsearch = { "¹«ÕĞ", "tag" };
-	private final static String[] askforanswer = { "Òª²»Òª", "ÔõÃ´°ì", "os¸ã", "Âğ", "»á²»»á", "ÒªÊÇ", "?" };
-	private final static String[] study = { "µÈÎÒ¸ãÍêÑ§Ï°", "ÎÒÈ¥Ğ´×÷ÒµÁË", "ÎÒÈ¥Ñ§Ï°ÁË", "ÎÒÔÚĞ´×÷Òµ", "µÈÎÒĞ´Íê×÷Òµ" };
-	private final static String[] keytag = { "½üÕ½Î»", "Ô¶³ÌÎ»", "Êä³ö", "·À»¤", "Éú´æ", "ÖÎÁÆ", "Ö§Ô®", "¿ìËÙ¸´»î", "¿Ø³¡", "ÕÙ»½", "Ï÷Èõ", "Î»ÒÆ",
-			"±¬·¢", "×ÊÉî¸ÉÔ±", "½üÎÀ", "ÏÈ·æ", "·ÑÓÃ»Ø¸´", "Ò½ÁÆ", "ÊõÊ¿", "¸¨Öú", "ÖØ×°", "¾Ñ»÷", "ÌØÖÖ" };
-	private final static String[] dirtywords = { "ËÀ", "ÒªÄãºÎÓÃ", "ÄãÂè", "À¬»ø", "Äã²»ĞĞ°¡", "¶ªÁË", "ÈÕ", "·ÏÎï", "ÔÓĞŞ", "ÎÒ³éÄã¸ö",
-			" ÎÒ³é¼¸¸ö", "²Ë", "¾ÍÕâ", "sb", "Éµ±Æ", "º©Åú" };
-	private final static String[] images = { "À´ÕÅºÃ¿µµÄ", "À´Í¼", "Í¼", "ºÃ¿´µÄ", "ºÃ¿µµÄ" };
-	private final static String[] music = { "µã¸è", "À´Ê×¸è", "ÍÆ¸è" };
-
-	public static void main(String[] args) throws InterruptedException,LoginFailedException, IOException {
-//		final Bot bot = BotFactoryJvm.newBot(3149920162L, "Wu135246!", new BotConfiguration() {
+//package demo;
+//
+//import java.io.File;
+//import java.io.IOException;
+//import java.io.IOException;
+//import java.util.ArrayList;
+//import java.util.HashMap;
+//import java.util.concurrent.CancellationException;
+//
+//import org.jetbrains.annotations.NotNull;
+//
+//import Arknights.ItemSearch;
+//import Arknights.Simulate;
+//import Arknights.tagSearch;
+//import demo.Extension;
+//import kotlin.coroutines.CoroutineContext;
+//import kotlinx.coroutines.Job;
+//import module.FileLoader;
+//import module.music;
+//import net.mamoe.mirai.Bot;
+//import net.mamoe.mirai.BotFactoryJvm;
+//import net.mamoe.mirai.event.EventHandler;
+//import net.mamoe.mirai.event.Events;
+//import net.mamoe.mirai.event.ListeningStatus;
+//import net.mamoe.mirai.event.SimpleListenerHost;
+//import net.mamoe.mirai.message.GroupMessageEvent;
+//import net.mamoe.mirai.message.data.At;
+//import net.mamoe.mirai.message.data.AtAll;
+//import net.mamoe.mirai.message.data.Image;
+//import net.mamoe.mirai.message.data.MessageChain;
+//import net.mamoe.mirai.message.data.MessageUtils;
+//import net.mamoe.mirai.network.LoginFailedException;
+//import net.mamoe.mirai.message.data.QuoteReply;
+//import net.mamoe.mirai.utils.BotConfiguration;
+//
+//public class BlockingTest {
+//
+//	private final static String[] Item = { "é…®å‡é›†ç»„", "ç‚½åˆé‡‘å—", "å‡èƒ¶", "ç ´æŸè£…ç½®", "è£…ç½®", "åŒé…®", "é…¯åŸæ–™", "ç ”ç£¨çŸ³", "äº”æ°´ç ”ç£¨çŸ³", "ç‚½åˆé‡‘",
+//			"é…®é˜µåˆ—", "æ‰­è½¬é†‡", "è½»é”°çŸ¿", "æ”¹è‰¯è£…ç½®", "åŸå²©", "å›ºåŸå²©ç»„", "æçº¯åŸå²©", "å›ºåŸå²©", "å¼‚é“", "å¼‚é“å—", "å¼‚é“ç»„", "å¼‚é“ç¢ç‰‡", "èšé…¸é…¯", "èšé…¸é…¯ç»„", "é…®å‡é›†",
+//			"èšåˆå‡èƒ¶", "RMA70-12", "RMA70-24", "ç³–", "ç³–èšå—", "ç³–ç»„", "ä»£ç³–", "ä¸‰æ°´é”°çŸ¿", "ç™½é©¬é†‡" };
+//	private final static String[] arknights10 = { "åè¿", "æµ‹æ¬§æ°”", "å¹²å‘˜å¯»è®¿", "å¯»è®¿å¹²å‘˜", "æ‹›å‹Ÿå¹²å‘˜", "æŠ½ä¿åº•", "10è¿" };
+//	private final static String[] arknights1 = { "å•æŠ½", "ä¸€è¿" };
+//	private final static String[] arknights100 = { "ä¸€ç™¾è¿", "100è¿", "ä¿åº•å…­æ˜Ÿ" };
+//	private final static String[] tagsearch = { "å…¬æ‹›", "tag" };
+//	private final static String[] askforanswer = { "è¦ä¸è¦", "æ€ä¹ˆåŠ", "osæ", "å—", "ä¼šä¸ä¼š", "è¦æ˜¯", "?" };
+//	private final static String[] study = { "ç­‰æˆ‘æå®Œå­¦ä¹ ", "æˆ‘å»å†™ä½œä¸šäº†", "æˆ‘å»å­¦ä¹ äº†", "æˆ‘åœ¨å†™ä½œä¸š", "ç­‰æˆ‘å†™å®Œä½œä¸š" };
+//	private final static String[] keytag = { "è¿‘æˆ˜ä½", "è¿œç¨‹ä½", "è¾“å‡º", "é˜²æŠ¤", "ç”Ÿå­˜", "æ²»ç–—", "æ”¯æ´", "å¿«é€Ÿå¤æ´»", "æ§åœº", "å¬å”¤", "å‰Šå¼±", "ä½ç§»",
+//			"çˆ†å‘", "èµ„æ·±å¹²å‘˜", "è¿‘å«", "å…ˆé”‹", "è´¹ç”¨å›å¤", "åŒ»ç–—", "æœ¯å£«", "è¾…åŠ©", "é‡è£…", "ç‹™å‡»", "ç‰¹ç§" };
+//	private final static String[] dirtywords = { "æ­»", "è¦ä½ ä½•ç”¨", "ä½ å¦ˆ", "åƒåœ¾", "ä½ ä¸è¡Œå•Š", "ä¸¢äº†", "æ—¥", "åºŸç‰©", "æ‚ä¿®", "æˆ‘æŠ½ä½ ä¸ª",
+//			" æˆ‘æŠ½å‡ ä¸ª", "èœ", "å°±è¿™", "sb", "å‚»é€¼", "æ†¨æ‰¹" };
+//	private final static String[] images = { "æ¥å¼ å¥½åº·çš„", "æ¥å›¾", "å›¾", "å¥½çœ‹çš„", "å¥½åº·çš„" };
+//	private final static String[] music = { "ç‚¹æ­Œ", "æ¥é¦–æ­Œ", "æ¨æ­Œ" };
+//
+//	public static void main(String[] args) throws InterruptedException,LoginFailedException, IOException {
+////		final Bot bot = BotFactoryJvm.newBot(3149920162L, "Wu135246!", new BotConfiguration() {
+////			{
+////				fileBasedDeviceInfo("deviceInfo.json");
+////			}
+////		});
+//		final Bot bot = BotFactoryJvm.newBot(1411969535L, "Mirai2020826", new BotConfiguration() {
 //			{
 //				fileBasedDeviceInfo("deviceInfo.json");
 //			}
+//
 //		});
-		final Bot bot = BotFactoryJvm.newBot(1411969535L, "Mirai2020826", new BotConfiguration() {
-			{
-				fileBasedDeviceInfo("deviceInfo.json");
-			}
-
-		});
-		Extension ex = new Extension();
-		Simulate a = new Simulate();
-		ItemSearch is = new ItemSearch();
-//		ImageGrab ig = new ImageGrab();
-		bot.login();
-		bot.getFriends().forEach(friend -> System.out.println(friend.getId() + ":" + friend.getNick()));
-
-		Events.registerEvents(bot, new SimpleListenerHost() {
-			@EventHandler
-			public ListeningStatus onGroupMessage(GroupMessageEvent event) {
-				String msgString = BlockingTest.toString(event.getMessage());
-				// at bot event
-				if (msgString.contains("@" + bot.getNick()) || msgString.contains("@Labman.Robert")) {
-					event.getGroup().sendMessage("processing request...");
-					if (msgString.contains("at")) {
-						event.getGroup().sendMessage(new At(event.getSender()));
-					} else if (msgString.contains(ex.getLastSentence())) {
-						ex.setLastSentence(ex.getResponse(ex.getResponse("repete")));
-						event.getSender().sendMessage(ex.getLastSentence());
-					} else if (msgString == "@" + bot.getNick() || msgString == "@Labman.Robert") {
-						ex.setLastSentence(ex.getResponse(ex.getgreet()));
-						event.getSender().sendMessage(ex.getLastSentence());
-					} else if (ex.containKeywords(msgString, askforanswer)) {
-						ex.setLastSentence(ex.getResponse("bookOfAnswer"));
-						event.getGroup().sendMessage(ex.getLastSentence());
-					} else if (ex.containKeywords(msgString, dirtywords)) {
-						ex.setLastSentence(ex.getResponse("dirtyWords"));
-						event.getGroup().sendMessage(ex.getLastSentence());
-					} else if (ex.containKeywords(msgString, keytag)) {
-						final QuoteReply quote = new QuoteReply(event.getSource());
-						tagSearch a = new tagSearch();
-						ex.setLastSentence(a.search(msgString));
-						event.getGroup().sendMessage(quote.plus(ex.getLastSentence()));
-					} else if (ex.containKeywords(msgString, music)) {
-						music m = new music();
-						ex.setLastSentence(m.pickaSong());
-						event.getGroup().sendMessage(ex.getLastSentence());
-					} else if (ex.containKeywords(msgString, Item)) {
-						File file = new File(is.getAddress(msgString));
-						if (file.exists()) {
-							final Image image = event.getGroup().uploadImage(new File(is.getAddress(msgString)));
-							// ÉÏ´«Ò»¸öÍ¼Æ¬²¢µÃµ½ Image ÀàĞÍµÄ Message
-							final String imageId = image.getImageId(); // ¿ÉÒÔÄÃµ½ ID
-							final Image fromId = MessageUtils.newImage(imageId); // ID ×ª»»µÃµ½ Image
-							event.getGroup().sendMessage(image); // ·¢ËÍÍ¼Æ¬
-						}
-//					} else if (ex.containKeywords(msgString, Images)) {
-//						event.getGroup().sendMessage("processing request...");
-//						File file = new File(ig.getAddress());
+//		Extension ex = new Extension();
+//		Simulate a = new Simulate();
+//		ItemSearch is = new ItemSearch();
+////		ImageGrab ig = new ImageGrab();
+//		bot.login();
+//		bot.getFriends().forEach(friend -> System.out.println(friend.getId() + ":" + friend.getNick()));
+//
+//		Events.registerEvents(bot, new SimpleListenerHost() {
+//			@EventHandler
+//			public ListeningStatus onGroupMessage(GroupMessageEvent event) {
+//				String msgString = BlockingTest.toString(event.getMessage());
+//				// at bot event
+//				if (msgString.contains("@" + bot.getNick()) || msgString.contains("@Labman.Robert")) {
+//					event.getGroup().sendMessage("processing request...");
+//					if (msgString.contains("at")) {
+//						event.getGroup().sendMessage(new At(event.getSender()));
+//					} else if (msgString.contains(ex.getLastSentence())) {
+//						ex.setLastSentence(ex.getResponse(ex.getResponse("repete")));
+//						event.getSender().sendMessage(ex.getLastSentence());
+//					} else if (msgString == "@" + bot.getNick() || msgString == "@Labman.Robert") {
+//						ex.setLastSentence(ex.getResponse(ex.getgreet()));
+//						event.getSender().sendMessage(ex.getLastSentence());
+//					} else if (ex.containKeywords(msgString, askforanswer)) {
+//						ex.setLastSentence(ex.getResponse("bookOfAnswer"));
+//						event.getGroup().sendMessage(ex.getLastSentence());
+//					} else if (ex.containKeywords(msgString, dirtywords)) {
+//						ex.setLastSentence(ex.getResponse("dirtyWords"));
+//						event.getGroup().sendMessage(ex.getLastSentence());
+//					} else if (ex.containKeywords(msgString, keytag)) {
+//						final QuoteReply quote = new QuoteReply(event.getSource());
+//						tagSearch a = new tagSearch();
+//						ex.setLastSentence(a.search(msgString));
+//						event.getGroup().sendMessage(quote.plus(ex.getLastSentence()));
+//					} else if (ex.containKeywords(msgString, music)) {
+//						music m = new music();
+//						ex.setLastSentence(m.pickaSong());
+//						event.getGroup().sendMessage(ex.getLastSentence());
+//					} else if (ex.containKeywords(msgString, Item)) {
+//						File file = new File(is.getAddress(msgString));
 //						if (file.exists()) {
 //							final Image image = event.getGroup().uploadImage(new File(is.getAddress(msgString)));
-//							// ÉÏ´«Ò»¸öÍ¼Æ¬²¢µÃµ½ Image ÀàĞÍµÄ Message
-//							final String imageId = image.getImageId(); // ¿ÉÒÔÄÃµ½ ID
-//							final Image fromId = MessageUtils.newImage(imageId); // ID ×ª»»µÃµ½ Image
-//							event.getGroup().sendMessage(image.plus("From Arknights Official Account")); // ·¢ËÍÍ¼Æ¬
+//							// ä¸Šä¼ ä¸€ä¸ªå›¾ç‰‡å¹¶å¾—åˆ° Image ç±»å‹çš„ Message
+//							final String imageId = image.getImageId(); // å¯ä»¥æ‹¿åˆ° ID
+//							final Image fromId = MessageUtils.newImage(imageId); // ID è½¬æ¢å¾—åˆ° Image
+//							event.getGroup().sendMessage(image); // å‘é€å›¾ç‰‡
 //						}
-					} else if (msgString.contains("permission")) {
-						event.getGroup().sendMessage(event.getPermission().toString());
-					} else if (msgString.contains("×Ô±¬")) {
-						for (int i = 0; i < 100; i++) {
-							event.getGroup().sendMessage(ex.getResponse("selfDestruct"));
-						}
-					} else if (msgString.equals("/R")) {
-						event.getGroup().sendMessage(msgString);
-					} else if (msgString.equals("/testImage")) {
-						event.getGroup()
-								.sendMessage(MessageUtils.newImage("Aketon.png")
-										.plus(MessageUtils.newImage("Alloy Block.png")).plus("Hello")
-										.plus(new At(event.getSender())).plus(AtAll.INSTANCE));
-					} else if (msgString.contains("/recall1")) {
-						event.getGroup().sendMessage("Äã¿´²»¼ûÕâÌõĞÅÏ¢").recall();
-
-					} else if (msgString.equals("/recall2")) {
-						final Job job = event.getGroup().sendMessage("3Ãëºó³·»Ø").recallIn(3000);
-						job.cancel(new CancellationException());
-//					} else if (msgString.equals("/help")) {
-//						event.getGroup().sendMessage("processing request...");
-//						event.getGroup().sendMessage("×Ô¶¨Òå³é¿¨Á¬Êı£º/Ori times");
-					} else {
-						ex.setLastSentence(ex.getResponse("unknown"));
-						event.getGroup().sendMessage(ex.getLastSentence());
-					}
-				} else {
-					// statusCode1;
-					if (ex.containKeywords(msgString, arknights1)) {
-						final QuoteReply quote = new QuoteReply(event.getSource());
-						event.getGroup().sendMessage(quote.plus(a.simulate(event.getSenderName(), 1)));
-					} else if (ex.containKeywords(msgString, arknights10)) {
-						final QuoteReply quote = new QuoteReply(event.getSource());
-						event.getGroup().sendMessage(quote.plus(a.simulate(event.getSenderName(), 10)));
-					} else if (ex.containKeywords(msgString, arknights100)) {
-						final QuoteReply quote = new QuoteReply(event.getSource());
-						event.getGroup().sendMessage(quote.plus(a.simulate(event.getSenderName(), 100)));
-					} else if (msgString.contains("/image")) {
-						File file = new File(
-								"C:\\Users\\Trance\\eclipse-workspace\\mirai-demos-master.zip_expanded\\mirai-demos-master\\mirai-demo-java\\src\\main\\java\\demo\\test.png");
-
-						final Image image = event.getGroup().uploadImage(new File(
-								"C:\\Users\\Trance\\eclipse-workspace\\mirai-demos-master.zip_expanded\\mirai-demos-master\\mirai-demo-java\\src\\main\\java\\demo\\test.png"));
-						// ÉÏ´«Ò»¸öÍ¼Æ¬²¢µÃµ½ Image ÀàĞÍµÄ Message
-						final String imageId = image.getImageId(); // ¿ÉÒÔÄÃµ½ ID
-						final Image fromId = MessageUtils.newImage(imageId); // ID ×ª»»µÃµ½ Image
-						event.getGroup().sendMessage(image); // ·¢ËÍÍ¼Æ¬
-					} else if (msgString.contains("Á¬³é")) {
-						final QuoteReply quote = new QuoteReply(event.getSource());
-						int times = 0;
-						try {
-							times = Integer.parseInt(msgString.substring(0, msgString.indexOf("Á¬³é")));
-						} catch (Exception e) {
-							event.getGroup().sendMessage(ex.getResponse("ilegalArgumentInSimulation"));
-						}
-						event.getGroup().sendMessage(quote.plus(a.simulate(event.getSenderName(), times)));
-					} else if (ex.containKeywords(msgString, tagsearch)) {
-						final QuoteReply quote = new QuoteReply(event.getSource());
-						tagSearch a = new tagSearch();
-						event.getGroup().sendMessage(quote.plus(a.search(msgString)));
-					} else if (ex.containKeywords(msgString, study)) {
-						event.getSender().mute(100);
-					} else if (msgString.equals("ÎÒÏë¾²¾²")) {
-						event.getGroup().getSettings().setMuteAll(true);
-					} else if (msgString.contains("ÄãÃÇÔõÃ´²»Ëµ»°")) {
-						event.getGroup().getSettings().setMuteAll(false);
-					}
-//				} else if (msgString.contains("·¢ËÍÍ¼Æ¬")) {
-//					File file = new File("myImage.jpg");
-//					if (file.exists()) {
-//						final Image image = event.getGroup().uploadImage(new File("myImage.jpg"));
-//						final String imageId = image.getImageId(); 
-//						final Image fromId = MessageUtils.newImage(imageId);
-//						event.getGroup().sendMessage(image); 
-//					}
-//				} else if (msgString.contains("friend")) {
-//					final Future<MessageReceipt<Contact>> future = event.getSender().sendMessageAsync("Async send");
-//					try {
-//						future.get();
-//					} catch (InterruptedException | ExecutionException e) {
-//						e.printStackTrace();
-//					}
-//					
-//				} else if (msgString.startsWith("convert")) {
-//					StringBuilder stringBuilder = new StringBuilder("Í¼Æ¬ID");
-//					event.getMessage().forEachContent(msg -> {
-//						if (msg instanceof Image) {
-//							stringBuilder.append(((Image) msg).getImageId());
-//							stringBuilder.append("\n");
+////					} else if (ex.containKeywords(msgString, Images)) {
+////						event.getGroup().sendMessage("processing request...");
+////						File file = new File(ig.getAddress());
+////						if (file.exists()) {
+////							final Image image = event.getGroup().uploadImage(new File(is.getAddress(msgString)));
+////							// ä¸Šä¼ ä¸€ä¸ªå›¾ç‰‡å¹¶å¾—åˆ° Image ç±»å‹çš„ Message
+////							final String imageId = image.getImageId(); // å¯ä»¥æ‹¿åˆ° ID
+////							final Image fromId = MessageUtils.newImage(imageId); // ID è½¬æ¢å¾—åˆ° Image
+////							event.getGroup().sendMessage(image.plus("From Arknights Official Account")); // å‘é€å›¾ç‰‡
+////						}
+//					} else if (msgString.contains("permission")) {
+//						event.getGroup().sendMessage(event.getPermission().toString());
+//					} else if (msgString.contains("è‡ªçˆ†")) {
+//						for (int i = 0; i < 100; i++) {
+//							event.getGroup().sendMessage(ex.getResponse("selfDestruct"));
 //						}
-//						return Unit.INSTANCE;
-//					});
-//					event.getGroup().sendMessage(stringBuilder.toString());
-
-				}
-				return ListeningStatus.LISTENING;
-			}
-
-			@Override
-			public void handleException(@NotNull CoroutineContext context, @NotNull Throwable exception) {
-				throw new RuntimeException("½âÎöÊ§°Ü", exception);
-			}
-		});
-
-		bot.join();
-	}
-
-	private static String toString(MessageChain chain) {
-		return chain.contentToString();
-	}
-}
+//					} else if (msgString.equals("/R")) {
+//						event.getGroup().sendMessage(msgString);
+//					} else if (msgString.equals("/testImage")) {
+//						event.getGroup()
+//								.sendMessage(MessageUtils.newImage("Aketon.png")
+//										.plus(MessageUtils.newImage("Alloy Block.png")).plus("Hello")
+//										.plus(new At(event.getSender())).plus(AtAll.INSTANCE));
+//					} else if (msgString.contains("/recall1")) {
+//						event.getGroup().sendMessage("ä½ çœ‹ä¸è§è¿™æ¡ä¿¡æ¯").recall();
+//
+//					} else if (msgString.equals("/recall2")) {
+//						final Job job = event.getGroup().sendMessage("3ç§’åæ’¤å›").recallIn(3000);
+//						job.cancel(new CancellationException());
+////					} else if (msgString.equals("/help")) {
+////						event.getGroup().sendMessage("processing request...");
+////						event.getGroup().sendMessage("è‡ªå®šä¹‰æŠ½å¡è¿æ•°ï¼š/Ori times");
+//					} else {
+//						ex.setLastSentence(ex.getResponse("unknown"));
+//						event.getGroup().sendMessage(ex.getLastSentence());
+//					}
+//				} else {
+//					// statusCode1;
+//					if (ex.containKeywords(msgString, arknights1)) {
+//						final QuoteReply quote = new QuoteReply(event.getSource());
+//						event.getGroup().sendMessage(quote.plus(a.simulate(event.getSenderName(), 1)));
+//					} else if (ex.containKeywords(msgString, arknights10)) {
+//						final QuoteReply quote = new QuoteReply(event.getSource());
+//						event.getGroup().sendMessage(quote.plus(a.simulate(event.getSenderName(), 10)));
+//					} else if (ex.containKeywords(msgString, arknights100)) {
+//						final QuoteReply quote = new QuoteReply(event.getSource());
+//						event.getGroup().sendMessage(quote.plus(a.simulate(event.getSenderName(), 100)));
+//					} else if (msgString.contains("/image")) {
+//						File file = new File(
+//								"C:\\Users\\Trance\\eclipse-workspace\\mirai-demos-master.zip_expanded\\mirai-demos-master\\mirai-demo-java\\src\\main\\java\\demo\\test.png");
+//
+//						final Image image = event.getGroup().uploadImage(new File(
+//								"C:\\Users\\Trance\\eclipse-workspace\\mirai-demos-master.zip_expanded\\mirai-demos-master\\mirai-demo-java\\src\\main\\java\\demo\\test.png"));
+//						// ä¸Šä¼ ä¸€ä¸ªå›¾ç‰‡å¹¶å¾—åˆ° Image ç±»å‹çš„ Message
+//						final String imageId = image.getImageId(); // å¯ä»¥æ‹¿åˆ° ID
+//						final Image fromId = MessageUtils.newImage(imageId); // ID è½¬æ¢å¾—åˆ° Image
+//						event.getGroup().sendMessage(image); // å‘é€å›¾ç‰‡
+//					} else if (msgString.contains("è¿æŠ½")) {
+//						final QuoteReply quote = new QuoteReply(event.getSource());
+//						int times = 0;
+//						try {
+//							times = Integer.parseInt(msgString.substring(0, msgString.indexOf("è¿æŠ½")));
+//						} catch (Exception e) {
+//							event.getGroup().sendMessage(ex.getResponse("ilegalArgumentInSimulation"));
+//						}
+//						event.getGroup().sendMessage(quote.plus(a.simulate(event.getSenderName(), times)));
+//					} else if (ex.containKeywords(msgString, tagsearch)) {
+//						final QuoteReply quote = new QuoteReply(event.getSource());
+//						tagSearch a = new tagSearch();
+//						event.getGroup().sendMessage(quote.plus(a.search(msgString)));
+//					} else if (ex.containKeywords(msgString, study)) {
+//						event.getSender().mute(100);
+//					} else if (msgString.equals("æˆ‘æƒ³é™é™")) {
+//						event.getGroup().getSettings().setMuteAll(true);
+//					} else if (msgString.contains("ä½ ä»¬æ€ä¹ˆä¸è¯´è¯")) {
+//						event.getGroup().getSettings().setMuteAll(false);
+//					}
+////				} else if (msgString.contains("å‘é€å›¾ç‰‡")) {
+////					File file = new File("myImage.jpg");
+////					if (file.exists()) {
+////						final Image image = event.getGroup().uploadImage(new File("myImage.jpg"));
+////						final String imageId = image.getImageId(); 
+////						final Image fromId = MessageUtils.newImage(imageId);
+////						event.getGroup().sendMessage(image); 
+////					}
+////				} else if (msgString.contains("friend")) {
+////					final Future<MessageReceipt<Contact>> future = event.getSender().sendMessageAsync("Async send");
+////					try {
+////						future.get();
+////					} catch (InterruptedException | ExecutionException e) {
+////						e.printStackTrace();
+////					}
+////					
+////				} else if (msgString.startsWith("convert")) {
+////					StringBuilder stringBuilder = new StringBuilder("å›¾ç‰‡ID");
+////					event.getMessage().forEachContent(msg -> {
+////						if (msg instanceof Image) {
+////							stringBuilder.append(((Image) msg).getImageId());
+////							stringBuilder.append("\n");
+////						}
+////						return Unit.INSTANCE;
+////					});
+////					event.getGroup().sendMessage(stringBuilder.toString());
+//
+//				}
+//				return ListeningStatus.LISTENING;
+//			}
+//
+//			@Override
+//			public void handleException(@NotNull CoroutineContext context, @NotNull Throwable exception) {
+//				throw new RuntimeException("è§£æå¤±è´¥", exception);
+//			}
+//		});
+//
+//		bot.join();
+//	}
+//
+//	private static String toString(MessageChain chain) {
+//		return chain.contentToString();
+//	}
+//}

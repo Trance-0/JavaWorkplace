@@ -6,6 +6,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException; // Import this class to handle errors
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -22,7 +23,7 @@ public class FileLoader {
 	public ArrayList<String> ReadFileByLine() throws IOException {
 		ArrayList<String> result = new ArrayList<String>();
 		try {
-			InputStreamReader isr = new InputStreamReader(new FileInputStream(new File(path)), "UTF-8");
+			InputStreamReader isr = new InputStreamReader(new FileInputStream(new File(path)),  StandardCharsets.UTF_8);
 			BufferedReader br = new BufferedReader(isr);
 			String data;
 			while ((data = br.readLine()) != null) {
@@ -41,7 +42,7 @@ public class FileLoader {
 			throws IOException {
 		HashMap<ArrayList<String>, String> result = new HashMap<ArrayList<String>, String>();
 		try {
-			InputStreamReader isr = new InputStreamReader(new FileInputStream(new File(path)), "UTF-8");
+			InputStreamReader isr = new InputStreamReader(new FileInputStream(new File(path)), StandardCharsets.UTF_8);
 			BufferedReader br = new BufferedReader(isr);
 			String data;
 			while ((data = br.readLine()) != null) {
@@ -70,7 +71,7 @@ public class FileLoader {
 			throws IOException {
 		HashMap<ArrayList<String>, String> result = new HashMap<ArrayList<String>, String>();
 		try {
-			InputStreamReader isr = new InputStreamReader(new FileInputStream(new File(path)), "UTF-8");
+			InputStreamReader isr = new InputStreamReader(new FileInputStream(new File(path)), StandardCharsets.UTF_8);
 			BufferedReader br = new BufferedReader(isr);
 			String data;
 			while ((data = br.readLine()) != null) {
@@ -98,7 +99,7 @@ public class FileLoader {
 		public HashMap<String, ArrayList<String>> ReadFileByMap() throws IOException {
 			HashMap<String, ArrayList<String>> result = new HashMap<String, ArrayList<String>>();
 			try {
-				InputStreamReader isr = new InputStreamReader(new FileInputStream(new File(path)), "UTF-8");
+				InputStreamReader isr = new InputStreamReader(new FileInputStream(new File(path)),StandardCharsets.UTF_8);
 				BufferedReader br = new BufferedReader(isr);
 				String data;
 				while ((data = br.readLine()) != null) {
@@ -127,7 +128,7 @@ public class FileLoader {
 			throws IOException {
 		HashMap<String, ArrayList<String>> result = new HashMap<String, ArrayList<String>>();
 		try {
-			InputStreamReader isr = new InputStreamReader(new FileInputStream(new File(path)), "UTF-8");
+			InputStreamReader isr = new InputStreamReader(new FileInputStream(new File(path)), StandardCharsets.UTF_8);
 			BufferedReader br = new BufferedReader(isr);
 			String data;
 			while ((data = br.readLine()) != null) {
@@ -157,7 +158,7 @@ public class FileLoader {
 			StringBuilder content = new StringBuilder();
 			try {
 				InputStreamReader isr = new InputStreamReader(new FileInputStream(new File(path + title + ".txt")),
-						"UTF-8");
+						StandardCharsets.UTF_8);
 				BufferedReader br = new BufferedReader(isr);
 				AES a = new AES(key);
 				int line = 0;
@@ -188,7 +189,7 @@ public class FileLoader {
 			StringBuilder content = new StringBuilder();
 			try {
 				InputStreamReader isr = new InputStreamReader(new FileInputStream(new File(path + title + ".txt")),
-						"UTF-8");
+						StandardCharsets.UTF_8);
 				BufferedReader br = new BufferedReader(isr);
 				int line = 0;
 				String data;
