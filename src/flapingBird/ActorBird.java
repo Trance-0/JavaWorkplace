@@ -1,7 +1,6 @@
 package flapingBird;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input.Buttons;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -20,6 +19,8 @@ public class ActorBird extends Actor {
 	private float birdSpeed;
 	public Rectangle shape;
 	private Sound cs;
+	private int height;
+	private int width;
 
 	public ActorBird() {
 		super();
@@ -33,8 +34,15 @@ public class ActorBird extends Actor {
 		gravity = 2.5F;
 		birdSpeed = 0F;
 		this.setPosition(50, 200);
+		height = 40;
+		width = 42;
 
 		cs = Gdx.audio.newSound(Gdx.files.internal("sounds//ansRight.mp3"));
+	}
+
+	public void fly() {
+		cs.setVolume(cs.play(), 0.1F);
+		birdSpeed = -100;
 	}
 
 	public void act(float delta) {
@@ -43,11 +51,10 @@ public class ActorBird extends Actor {
 		animationRegion = flyingBird.getKeyFrame(setTime);
 		birdSpeed += gravity;
 		this.setY(this.getY() - birdSpeed * delta);
-		shape.set(this.getX(), this.getY(), this.getWidth(), this.getHeight());
-		if (Gdx.input.isButtonPressed(Buttons.LEFT) && birdSpeed > 0) {
-			cs.setVolume(cs.play(), 0.1F);
-			birdSpeed = -100;
-		}
+		shape.set(this.getX(), this.getY() + 5, width, height - 10);
+//		if (Gdx.input.isButtonPressed(Buttons.LEFT) && birdSpeed > 0) {
+//			fly();
+//		}
 	}
 
 	public Rectangle getShape() {
@@ -56,7 +63,7 @@ public class ActorBird extends Actor {
 
 	public void draw(Batch batch, float parentAlpha) {
 		super.draw(batch, parentAlpha);
-//		batch.draw(animationRegion, this.getX(), this.getY(), 50, 35);
-		batch.draw(animationRegion, this.getX(), this.getY());
+		batch.draw(animationRegion, this.getX(), this.getY(), width, height);
+//		batch.draw(animationRegion, this.getX(), this.getY(), 34, 24);
 	}
 }

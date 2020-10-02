@@ -10,8 +10,8 @@ public class Terminal {
 		// 应用配置
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 
-		config.width = 3508; // 指定窗口宽度
-		config.height = 2481; // 指定窗口高度
+		config.width = 280; // 指定窗口宽度
+		config.height = 512; // 指定窗口高度
 
 		config.resizable = true; // 窗口设置为大小不可改变
 

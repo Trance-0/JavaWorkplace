@@ -11,9 +11,15 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 public class ThemeEnd implements Screen {
 	private flapingBird flapingBird;
+	private Stage stage;
 
 	public ThemeEnd(flapingBird t) {
 		flapingBird = t;
@@ -30,11 +36,18 @@ public class ThemeEnd implements Screen {
 
 	private SpriteBatch batch;
 
+	private Button go;
+	private Texture goC;
+	private Texture goU;
+	private Texture goS;
+	private Button.ButtonStyle goStyle;
+
 	private Sprite bg;
 
 	@Override
 	public void show() {
 
+		stage = new Stage();
 		batch = new SpriteBatch();
 
 		setTime = 0;
@@ -56,16 +69,39 @@ public class ThemeEnd implements Screen {
 
 		bgm.setLooping(true);
 		bgm.setVolume(0.1F);
-		bgm.play();
+		if (flapingBird.isBgmOn()) {
+			bgm.play();
+		}
 
 		title.getData().setScale(0.9F);
 		info.setColor(Color.CYAN);
 		title.setColor(Color.valueOf("FF00EEAA"));
+
+		goC = new Texture(Gdx.files.internal("longConfirmed.png"));
+		goS = new Texture(Gdx.files.internal("longSelected.png"));
+		goU = new Texture(Gdx.files.internal("longUnselected.png"));
+		goStyle = new Button.ButtonStyle();
+		goStyle.up = new TextureRegionDrawable(new TextureRegion(goU));
+		goStyle.over = new TextureRegionDrawable(new TextureRegion(goS));
+		goStyle.down = new TextureRegionDrawable(new TextureRegion(goC));
+		go = new Button(goStyle);
+		go.addListener(new ClickListener() {
+			public void clicked(InputEvent event, float x, float y) {
+				Gdx.app.log("tag", event.toString());
+				flapingBird.create();
+			}
+		});
+		go.setPosition(50, 200);
+		go.setSize(go.getWidth() / 5, go.getHeight() / 5);
+		Gdx.input.setInputProcessor(stage);
+
+		stage.addActor(go);
 	}
 
 	@Override
 	public void render(float delta) {
 		// TODO Auto-generated method stub
+		stage.act(delta);
 
 		setTime += delta;
 		animationRegion = inloading.getKeyFrame(setTime);
@@ -77,6 +113,8 @@ public class ThemeEnd implements Screen {
 //		title.draw(batch, "·É·É·É", 120, 400);
 		info.draw(batch, "Ê§°Ü!", 120, 300);
 		batch.end();
+
+		stage.draw();
 	}
 
 	@Override

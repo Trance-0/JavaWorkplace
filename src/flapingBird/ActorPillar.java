@@ -24,13 +24,17 @@ public class ActorPillar extends Actor {
 	private ActorBird ActorBird;
 
 	private Sprite upPillar, downPillar;
+	private flapingBird fb;
 
-	public ActorPillar(ActorBird haha) {
+	private int height;
+	private int width;
+
+	public ActorPillar(ActorBird haha, flapingBird flapingBird) {
+		fb = flapingBird;
 		ActorBird = haha;
 		gameover = false;
 		rand = new Random();
 		dis = 100;
-		score = 0;
 		upPillarShape = new Rectangle();
 		downPillarShape = new Rectangle();
 
@@ -42,10 +46,13 @@ public class ActorPillar extends Actor {
 		downPillar = new Sprite(texture);
 		upPillar.setPosition(200, 250);
 		downPillar.setPosition(200, -150);
+
+		width = 52;
+		height = 320;
 	}
 
 	public void act(float delta) {
-		if (upPillar.getX() < -upPillar.getWidth()) {
+		if (upPillar.getX() < -width) {
 			scoreLock = true;
 			upPillar.setY(rand.nextInt(240) + 180);
 			downPillar.setY(upPillar.getY() - 326 - dis);
@@ -56,14 +63,14 @@ public class ActorPillar extends Actor {
 		upPillar.translateX(-speed * delta);
 		downPillar.translateX(-speed * delta);
 		if (upPillar.getX() < ActorBird.getX() && scoreLock) {
-			score += 1;
+			fb.addScore();
 			Gdx.app.log("Score", Integer.toString(score));
 
 //			Gdx.app.log("Speed", Integer.toString(speed));
 			scoreLock = false;
 		}
-		upPillarShape.set(upPillar.getX(), upPillar.getY(), upPillar.getWidth(), upPillar.getHeight());
-		downPillarShape.set(downPillar.getX(), downPillar.getY(), downPillar.getWidth(), downPillar.getHeight());
+		upPillarShape.set(upPillar.getX(), upPillar.getY(), width, height);
+		downPillarShape.set(downPillar.getX(), downPillar.getY(), width, height);
 		if (upPillarShape.overlaps(ActorBird.getShape()) || downPillarShape.overlaps(ActorBird.getShape())
 				|| (ActorBird.getY() > 512 || ActorBird.getY() < 0)) {
 			gameover = true;
@@ -74,9 +81,11 @@ public class ActorPillar extends Actor {
 
 	public void draw(Batch batch, float parentAlpha) {
 		super.draw(batch, parentAlpha);
+//		batch.draw(texture, x, y, width, height);
 
-		batch.draw(upPillar, upPillar.getX(), upPillar.getY());
+		batch.draw(upPillar, upPillar.getX(), upPillar.getY(), 52, 320);
 
-		batch.draw(downPillar, downPillar.getX(), downPillar.getY());
+		batch.draw(downPillar, downPillar.getX(), downPillar.getY(), width, height);
 	}
+
 }

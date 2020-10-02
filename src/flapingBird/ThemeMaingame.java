@@ -9,7 +9,12 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 //引入处理精灵类的库文件
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 /**
  * 游戏主程序的入口类, 实现 ApplicationListener 接口
@@ -32,6 +37,12 @@ public class ThemeMaingame implements Screen {
 	// 精灵类
 	private Sprite bg;
 
+	private Button go;
+	private Texture goC;
+	private Texture goU;
+	private Texture goS;
+	private Button.ButtonStyle goStyle;
+
 	private ActorBird bbb;
 	private ActorPillar pillar;
 
@@ -39,8 +50,9 @@ public class ThemeMaingame implements Screen {
 	public void show() {
 		stage = new Stage();
 		bbb = new ActorBird();
-		pillar = new ActorPillar(bbb);
+		pillar = new ActorPillar(bbb, flapingBird);
 		bgm = Gdx.audio.newMusic(Gdx.files.internal("sounds\\gameBG.mp3"));
+
 		scoreText = new BitmapFont(Gdx.files.internal("font\\Haha.fnt"));
 		fpsText = new BitmapFont(Gdx.files.internal("font\\Haha.fnt"));
 		batch = new SpriteBatch();
@@ -48,14 +60,36 @@ public class ThemeMaingame implements Screen {
 		bg = new Sprite(texture);
 		bgm.setLooping(true);
 		bgm.setVolume(0.1F);
-		bgm.play();
+		if (flapingBird.isBgmOn()) {
+			bgm.play();
+		}
+
+		goC = new Texture(Gdx.files.internal("longConfirmed.png"));
+		goS = new Texture(Gdx.files.internal("longSelected.png"));
+		goU = new Texture(Gdx.files.internal("longUnselected.png"));
+		goStyle = new Button.ButtonStyle();
+		goStyle.up = new TextureRegionDrawable(new TextureRegion(goU));
+		goStyle.over = new TextureRegionDrawable(new TextureRegion(goS));
+		goStyle.down = new TextureRegionDrawable(new TextureRegion(goC));
+		go = new Button(goStyle);
+		go.addListener(new ClickListener() {
+			public void clicked(InputEvent event, float x, float y) {
+				Gdx.app.log("tag", event.toString());
+				bbb.fly();
+			}
+		});
+		go.setPosition(0, 0);
+		go.setSize(go.getWidth() / 4, go.getHeight() / 4);
+
 		scoreText.getData().setScale(0.9F);
 		fpsText.setColor(Color.CYAN);
 		scoreText.setColor(Color.valueOf("FF00EEAA"));
 		Gdx.app.log("Texture Width", texture.getWidth() + "px");
 		Gdx.app.log("Texture Height", texture.getHeight() + "px");
+		Gdx.input.setInputProcessor(stage);
 		stage.addActor(bbb);
 		stage.addActor(pillar);
+		stage.addActor(go);
 	}
 
 	@Override
@@ -71,7 +105,7 @@ public class ThemeMaingame implements Screen {
 		// 纹理的画布
 		batch.begin();
 		bg.draw(batch);
-		scoreText.draw(batch, "分数:" + Double.toString((double) pillar.score / 2), 10, 500);
+		scoreText.draw(batch, "分数:" + Integer.toString(flapingBird.getScore()), 10, 500);
 		fpsText.draw(batch, "FPS:" + Gdx.graphics.getFramesPerSecond(), 10, 400);
 		batch.end();
 
