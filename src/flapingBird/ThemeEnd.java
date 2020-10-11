@@ -69,7 +69,7 @@ public class ThemeEnd implements Screen {
 
 		bgm.setLooping(true);
 		bgm.setVolume(0.1F);
-		if (flapingBird.isBgmOn()) {
+		if (Gdx.app.getPreferences("MyPref").getBoolean("isBgmOn", true)) {
 			bgm.play();
 		}
 

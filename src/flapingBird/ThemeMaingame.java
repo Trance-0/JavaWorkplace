@@ -48,6 +48,11 @@ public class ThemeMaingame implements Screen {
 
 	@Override
 	public void show() {
+
+//		flapingBird.setBestScore(Integer.parseInt(flapingBird.readFile("bestScore")));
+//		flapingBird.resetScore();
+//		Gdx.app.log("bestScore", flapingBird.readFile("bestScore"));
+
 		stage = new Stage();
 		bbb = new ActorBird();
 		pillar = new ActorPillar(bbb, flapingBird);
@@ -60,7 +65,7 @@ public class ThemeMaingame implements Screen {
 		bg = new Sprite(texture);
 		bgm.setLooping(true);
 		bgm.setVolume(0.1F);
-		if (flapingBird.isBgmOn()) {
+		if (Gdx.app.getPreferences("MyPref").getBoolean("isBgmOn", true)) {
 			bgm.play();
 		}
 

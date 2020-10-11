@@ -41,7 +41,9 @@ public class ActorBird extends Actor {
 	}
 
 	public void fly() {
-		cs.setVolume(cs.play(), 0.1F);
+		if (Gdx.app.getPreferences("MyPref").getBoolean("isSoundOn", true)) {
+			cs.setVolume(cs.play(), 0.1F);
+		}
 		birdSpeed = -100;
 	}
 

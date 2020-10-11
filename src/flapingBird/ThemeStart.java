@@ -76,7 +76,7 @@ public class ThemeStart implements Screen {
 
 		bgm.setLooping(true);
 		bgm.setVolume(0.1F);
-		if (flapingBird.isBgmOn()) {
+		if (Gdx.app.getPreferences("MyPref").getBoolean("isBgmOn", true)) {
 			bgm.play();
 		}
 
@@ -90,35 +90,30 @@ public class ThemeStart implements Screen {
 		boolStyle.checkboxOn = new TextureRegionDrawable(new TextureRegion(boolOn));
 		boolStyle.checkboxOff = new TextureRegionDrawable(new TextureRegion(boolOff));
 		boolStyle.font = info;
-//		boolStyle.
 
 		boolbgm = new CheckBox("BgmOn   ", boolStyle);
-//		boolbgm.setPosition(50, 200);
-//		System.out.println(boolbgm.getWidth());
-//		System.out.println(boolbgm.getHeight());
+		boolbgm.setPosition(50, 200);
 		boolbgm.setSize(boolbgm.getWidth() / 5, boolbgm.getHeight() / 5);
-		flapingBird.setBgm(boolbgm.isChecked());
+		Gdx.app.getPreferences("MyPref").putBoolean("isBgmOn", true);
 		boolbgm.addListener(new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
 				// TODO Auto-generated method stub
 				System.out.println(boolbgm.isChecked());
-				flapingBird.setBgm(boolbgm.isChecked());
+				Gdx.app.getPreferences("MyPref").putBoolean("isBgmOn", boolbgm.isChecked());
 			}
 		});
 
 		boolsound = new CheckBox("SoundOn", boolStyle);
 		boolsound.setPosition(50, 300);
 		boolsound.setSize(boolsound.getWidth() / 5, boolsound.getHeight() / 5);
-//		System.out.println(boolsound.getWidth());
-//		System.out.println(boolsound.getHeight());
-		flapingBird.setSound(boolsound.isChecked());
+		Gdx.app.getPreferences("MyPref").putBoolean("isSoundOn", true);
 		boolsound.addListener(new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
 				// TODO Auto-generated method stub
 				System.out.println(boolsound.isChecked());
-				flapingBird.setSound(boolsound.isChecked());
+				Gdx.app.getPreferences("MyPref").putBoolean("isSoundOn", boolsound.isChecked());
 			}
 		});
 

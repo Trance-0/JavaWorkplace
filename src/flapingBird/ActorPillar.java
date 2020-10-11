@@ -18,7 +18,6 @@ public class ActorPillar extends Actor {
 	private Random rand;
 	public boolean gameover;
 
-	public int score;
 	private int speed;
 	private int dis;
 	private ActorBird ActorBird;
@@ -31,6 +30,7 @@ public class ActorPillar extends Actor {
 
 	public ActorPillar(ActorBird haha, flapingBird flapingBird) {
 		fb = flapingBird;
+		fb.resetScore();
 		ActorBird = haha;
 		gameover = false;
 		rand = new Random();
@@ -64,7 +64,7 @@ public class ActorPillar extends Actor {
 		downPillar.translateX(-speed * delta);
 		if (upPillar.getX() < ActorBird.getX() && scoreLock) {
 			fb.addScore();
-			Gdx.app.log("Score", Integer.toString(score));
+			Gdx.app.log("Score", Integer.toString(fb.getScore()));
 
 //			Gdx.app.log("Speed", Integer.toString(speed));
 			scoreLock = false;
@@ -74,6 +74,7 @@ public class ActorPillar extends Actor {
 		if (upPillarShape.overlaps(ActorBird.getShape()) || downPillarShape.overlaps(ActorBird.getShape())
 				|| (ActorBird.getY() > 512 || ActorBird.getY() < 0)) {
 			gameover = true;
+			fb.updateBestScore();
 			Gdx.app.log("Haha", "GameOver");
 		}
 
