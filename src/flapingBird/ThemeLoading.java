@@ -22,6 +22,7 @@ public class ThemeLoading implements Screen {
 		mypref = Gdx.app.getPreferences("MyPref");
 		flapingBird.setPreference(mypref);
 		flapingBird.setBestScore(mypref.getInteger("bestScore", -1));
+		flapingBird.setBestScore(mypref.getInteger("bestScore", -1));
 		Gdx.app.log("bestScore", Integer.toString(mypref.getInteger("bestScore", -1)));
 
 	}

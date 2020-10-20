@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -16,9 +17,11 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
+import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.Align;
 
 public class ThemeStart implements Screen {
 	private flapingBird flapingBird;
@@ -51,6 +54,11 @@ public class ThemeStart implements Screen {
 	private Texture goU;
 	private Texture goS;
 	private Button.ButtonStyle goStyle;
+
+	private Texture textBgTx;
+	private Texture cursorTx;
+	private TextField myTextField;
+	private TextField myPasswordField;
 
 	@Override
 	public void show() {
@@ -127,6 +135,10 @@ public class ThemeStart implements Screen {
 		go = new Button(goStyle);
 		go.addListener(new ClickListener() {
 			public void clicked(InputEvent event, float x, float y) {
+				Gdx.app.log("userName", myTextField.getText());
+				Gdx.app.log("password", myPasswordField.getText());
+				Gdx.app.getPreferences("MyPref").putString("userName", myTextField.getText());
+				Gdx.app.getPreferences("MyPref").putString("password", myPasswordField.getText());
 				Gdx.app.log("tag", event.toString());
 				flapingBird.showGame();
 
@@ -136,10 +148,64 @@ public class ThemeStart implements Screen {
 		go.setSize(go.getWidth() / 5, go.getHeight() / 5);
 		Gdx.input.setInputProcessor(stage);
 
+		textBgTx = new Texture(Gdx.files.internal("TextBox.jpg"));
+		cursorTx = createPixMap(24, 20);
+		TextField.TextFieldStyle style = new TextField.TextFieldStyle();
+		style.background = new TextureRegionDrawable(new TextureRegion(textBgTx));
+		style.cursor = new TextureRegionDrawable(new TextureRegion(cursorTx));
+		info.getData().setScale(0.6F);
+		info.setColor(Color.CYAN);
+		style.font = info;
+		style.fontColor = new Color(0, 0, 0, 1); // RGBA
+		myTextField = new TextField("", style);
+		myTextField.setAlignment(Align.center);
+//		myTextField.setPosition(左下角x, 左下角y);
+		myTextField.setPosition(50, 370);
+//		myTextField.setSize(宽度, 高度);
+		myTextField.setSize(200, 30);
+		myTextField.setMaxLength(16);
+		// 默认文字不受限制
+
+		myPasswordField = new TextField("", style);
+		myPasswordField.setAlignment(Align.center);
+//		myTextField.setPosition(左下角x, 左下角y);
+		myPasswordField.setPosition(50, 330);
+//		myTextField.setSize(宽度, 高度);
+		myPasswordField.setSize(200, 30);
+		myPasswordField.setPasswordMode(true); // 开启密码模式
+		myPasswordField.setPasswordCharacter('*'); // 设置密码字符
+		myPasswordField.setMaxLength(16);
+		// 默认文字不受限制
+
 		stage.addActor(go);
 		stage.addActor(boolbgm);
 		stage.addActor(boolsound);
+		stage.addActor(myTextField);
+		stage.addActor(myPasswordField);
 		batch = new SpriteBatch();
+	}
+
+	private Texture createCursorTexture(int w, int h) {
+		Pixmap pixmap = new Pixmap(w, h, Pixmap.Format.RGBA8888);
+		pixmap.setColor(0, 0, 0, 1); // RGBA
+		pixmap.fill();
+		Texture texture = new Texture(pixmap);
+		pixmap.dispose();
+		return texture;
+	}
+
+	private Texture createPixMap(int w, int h) {
+		Pixmap pixmap = new Pixmap(w, h, Pixmap.Format.RGBA8888);
+		pixmap.setColor(1, 0.5f, 0.5f, 1); // 设置RGBA的值
+		pixmap.setColor(Color.valueOf("FF00EEAA")); // 设置RGBA的16进制值
+		pixmap.setColor(Color.RED); // 设置颜色名称
+//		绘制圆形
+		pixmap.fillCircle(6, 6, 6); // 填充
+		pixmap.fillCircle(18, 6, 6); // 填充
+		pixmap.fillTriangle(0, 6, 12, 20, 24, 6); // 填充
+		Texture texture = new Texture(pixmap);
+		pixmap.dispose();
+		return texture;
 	}
 
 	@Override
@@ -153,7 +219,8 @@ public class ThemeStart implements Screen {
 		batch.begin();
 		bg.draw(batch);
 //				batch.draw(animationRegion, bird.getX(), bird.getY());
-		title.draw(batch, "flapingBird", 100, 400);
+		title.draw(batch, "flapingBird", 100, 450);
+		batch.draw(createPixMap(100, 100), 50, 50);
 		batch.end();
 		stage.draw();
 //		if (Gdx.input.isButtonPressed(Buttons.RIGHT)) {
