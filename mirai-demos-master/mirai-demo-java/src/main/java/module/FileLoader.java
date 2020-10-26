@@ -11,19 +11,23 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class FileLoader {
-	private String defaultSpliterOfList=":";
-	private String defaultSpliterOfElement=",";
+	private String defaultSpliterOfList = ":";
+	private String defaultSpliterOfElement = ",";
 	private String path;
 
-	public FileLoader(String abspath) {
+	public FileLoader(String abspath) throws IOException {
 		path = abspath;
+		File f = new File(path);
+		if (!f.exists()) {
+			f.createNewFile();
+		}
 	}
 
-	//read Arraylist
+	// read Arraylist
 	public ArrayList<String> ReadFileByLine() throws IOException {
 		ArrayList<String> result = new ArrayList<String>();
 		try {
-			InputStreamReader isr = new InputStreamReader(new FileInputStream(new File(path)),  StandardCharsets.UTF_8);
+			InputStreamReader isr = new InputStreamReader(new FileInputStream(new File(path)), StandardCharsets.UTF_8);
 			BufferedReader br = new BufferedReader(isr);
 			String data;
 			while ((data = br.readLine()) != null) {
@@ -37,9 +41,8 @@ public class FileLoader {
 		return result;
 	}
 
-	//read HashMap<ArrayList<String>, String> without slipter
-	public HashMap<ArrayList<String>, String> ReadFileByDirMap()
-			throws IOException {
+	// read HashMap<ArrayList<String>, String> without slipter
+	public HashMap<ArrayList<String>, String> ReadFileByDirMap() throws IOException {
 		HashMap<ArrayList<String>, String> result = new HashMap<ArrayList<String>, String>();
 		try {
 			InputStreamReader isr = new InputStreamReader(new FileInputStream(new File(path)), StandardCharsets.UTF_8);
@@ -66,7 +69,7 @@ public class FileLoader {
 		return result;
 	}
 
-	//read HashMap<ArrayList<String>, String>
+	// read HashMap<ArrayList<String>, String>
 	public HashMap<ArrayList<String>, String> ReadFileByDirMap(String spliterOfList, String spliterOfElement)
 			throws IOException {
 		HashMap<ArrayList<String>, String> result = new HashMap<ArrayList<String>, String>();
@@ -95,35 +98,35 @@ public class FileLoader {
 		return result;
 	}
 
-	//read HashMap<String, ArrayList<String>> without spliter
-		public HashMap<String, ArrayList<String>> ReadFileByMap() throws IOException {
-			HashMap<String, ArrayList<String>> result = new HashMap<String, ArrayList<String>>();
-			try {
-				InputStreamReader isr = new InputStreamReader(new FileInputStream(new File(path)),StandardCharsets.UTF_8);
-				BufferedReader br = new BufferedReader(isr);
-				String data;
-				while ((data = br.readLine()) != null) {
-					String key = data.substring(0, data.indexOf(defaultSpliterOfList));
-					data = data.substring(data.indexOf(defaultSpliterOfList) + 1);
-					ArrayList<String> element = new ArrayList<String>();
-					int nextIndex = data.indexOf(defaultSpliterOfElement, 0);
-					while (nextIndex > 0) {
-						String temp = data.substring(0, nextIndex);
-						data = data.substring(nextIndex + 1);
-						nextIndex = data.indexOf(defaultSpliterOfElement);
-						element.add(temp);
-					}
-					result.put(key, element);
+	// read HashMap<String, ArrayList<String>> without spliter
+	public HashMap<String, ArrayList<String>> ReadFileByMap() throws IOException {
+		HashMap<String, ArrayList<String>> result = new HashMap<String, ArrayList<String>>();
+		try {
+			InputStreamReader isr = new InputStreamReader(new FileInputStream(new File(path)), StandardCharsets.UTF_8);
+			BufferedReader br = new BufferedReader(isr);
+			String data;
+			while ((data = br.readLine()) != null) {
+				String key = data.substring(0, data.indexOf(defaultSpliterOfList));
+				data = data.substring(data.indexOf(defaultSpliterOfList) + 1);
+				ArrayList<String> element = new ArrayList<String>();
+				int nextIndex = data.indexOf(defaultSpliterOfElement, 0);
+				while (nextIndex > 0) {
+					String temp = data.substring(0, nextIndex);
+					data = data.substring(nextIndex + 1);
+					nextIndex = data.indexOf(defaultSpliterOfElement);
+					element.add(temp);
 				}
-				br.close();
-			} catch (FileNotFoundException e) {
-				System.out.println("An error occurred.");
-				e.printStackTrace();
+				result.put(key, element);
 			}
-			return result;
+			br.close();
+		} catch (FileNotFoundException e) {
+			System.out.println("An error occurred.");
+			e.printStackTrace();
 		}
-		
-	//read HashMap<String, ArrayList<String>> 
+		return result;
+	}
+
+	// read HashMap<String, ArrayList<String>>
 	public HashMap<String, ArrayList<String>> ReadFileByMap(String spliterOfList, String spliterOfElement)
 			throws IOException {
 		HashMap<String, ArrayList<String>> result = new HashMap<String, ArrayList<String>>();
@@ -151,64 +154,72 @@ public class FileLoader {
 		}
 		return result;
 	}
-	
-	//read Memo with key
-		public Memo ReadMemo(String title, String key) throws IOException {
-			String time = "";
-			StringBuilder content = new StringBuilder();
-			try {
-				InputStreamReader isr = new InputStreamReader(new FileInputStream(new File(path + title + ".txt")),
-						StandardCharsets.UTF_8);
-				BufferedReader br = new BufferedReader(isr);
-				AES a = new AES(key);
-				int line = 0;
-				String data;
-				while ((data = br.readLine()) != null) {
 
-					System.out.println(data);
-					if (line == 0) {
-						title = data;
-					} else if (line == 1) {
-						time = data;
-					} else {
-						content.append(a.decrypt(data));
-					}
-					line++;
+	// read Memo with key
+	public Memo ReadMemo(String title, String key) throws IOException {
+		String time = "";
+		StringBuilder content = new StringBuilder();
+		try {
+			InputStreamReader isr = new InputStreamReader(new FileInputStream(new File(path + title + ".txt")),
+					StandardCharsets.UTF_8);
+			BufferedReader br = new BufferedReader(isr);
+			AES a = new AES(key);
+			int line = 0;
+			String data;
+			while ((data = br.readLine()) != null) {
+
+				System.out.println(data);
+				if (line == 0) {
+					title = data;
+				} else if (line == 1) {
+					time = data;
+				} else {
+					content.append(a.decrypt(data));
 				}
-				br.close();
-			} catch (FileNotFoundException e) {
-				System.out.println("An error occurred.");
-				e.printStackTrace();
+				line++;
 			}
-			return new Memo(title, key, time, content.toString());
+			br.close();
+		} catch (FileNotFoundException e) {
+			System.out.println("An error occurred.");
+			e.printStackTrace();
 		}
+		return new Memo(title, key, time, content.toString());
+	}
 
-		//read Memo without key
-		public Memo ReadMemo(String title) throws IOException {
-			String time = "";
-			StringBuilder content = new StringBuilder();
-			try {
-				InputStreamReader isr = new InputStreamReader(new FileInputStream(new File(path + title + ".txt")),
-						StandardCharsets.UTF_8);
-				BufferedReader br = new BufferedReader(isr);
-				int line = 0;
-				String data;
-				while ((data = br.readLine()) != null) {
-					if (line == 1) {
-						title = data;
-					} else if (line == 2) {
-						time = data;
-					} else {
-						content.append(data);
-					}
-					line++;
+	// read Memo without key
+	public Memo ReadMemo(String title) throws IOException {
+		String time = "";
+		StringBuilder content = new StringBuilder();
+		try {
+			InputStreamReader isr = new InputStreamReader(new FileInputStream(new File(path + title + ".txt")),
+					StandardCharsets.UTF_8);
+			BufferedReader br = new BufferedReader(isr);
+			int line = 0;
+			String data;
+			while ((data = br.readLine()) != null) {
+				if (line == 1) {
+					title = data;
+				} else if (line == 2) {
+					time = data;
+				} else {
+					content.append(data);
 				}
-				br.close();
-			} catch (FileNotFoundException e) {
-				System.out.println("An error occurred.");
-				e.printStackTrace();
+				line++;
 			}
-			return new Memo(title, time, content.toString());
+			br.close();
+		} catch (FileNotFoundException e) {
+			System.out.println("An error occurred.");
+			e.printStackTrace();
 		}
+		return new Memo(title, time, content.toString());
+	}
 
+	public boolean isEmpty() {
+		try {
+			InputStreamReader isr = new InputStreamReader(new FileInputStream(new File(path)));
+			return true;
+		} catch (FileNotFoundException e) {
+			return false;
+		}
+	}
 }
