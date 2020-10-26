@@ -61,22 +61,26 @@ public class Simulate {
 		int pos = rand.nextInt(1000) + 1;
 		int up = rand.nextInt(100) + 1;
 		if (pos < threshold5 || d.getno5() >= 89) {
+			d.addno4count();
+			d.reset5();
 			if ((up < upthreshold5 || d.isnoup5()) && upCharacter5.size() > 0) {
 				d.setnoup5(false);
 				return upCharacter5;
 			}
 			d.setnoup5(true);
-			d.reset5();
 			return grade5;
 		} else if (pos < threshold4 || d.getno4() >= 9) {
+			d.addno5count();
+			d.reset4();
 			if ((up < upthreshold4 || d.isnoup5()) && upCharacter4.size() > 0) {
 				d.setnoup4(false);
 				return upCharacter4;
 			}
 			d.setnoup4(true);
-			d.reset4();
 			return grade4;
 		} else {
+			d.addno5count();
+			d.addno4count();
 			return grade3;
 		}
 	}
@@ -90,7 +94,7 @@ public class Simulate {
 		DataSet temp = null;
 		FileLoader fl = new FileLoader(path + userName + ".txt");
 		temp = new DataSet(fl.ReadFileByMap());
-		System.out.println(temp.getpool());
+//		System.out.println(temp.getpool());
 		if (temp.getUserName() == null) {
 			// TODO Auto-generated catch block
 			temp = new DataSet(userName);
@@ -118,25 +122,21 @@ public class Simulate {
 			ArrayList<String> p = core(temp);
 			System.out.print(" ");
 			if (p.equals(grade5) || p.equals(upCharacter5)) {
-				temp.addno4count();
 				String item = pickoneFrom(p);
 				temp.AddItems(item);
 				result = result.append(" [★★★★★ " + item + "] ");
 			} else if (p.equals(grade4) || p.equals(upCharacter4)) {
-				temp.addno5count();
 				String item = pickoneFrom(p);
 				temp.AddItems(item);
 				result = result.append(" [★★★★ " + item + "] ");
 			} else {
-				temp.addno5count();
-				temp.addno4count();
 				String item = pickoneFrom(p);
 				temp.AddItems(item);
 				result = result.append(" [★★★ " + item + "] ");
 			}
 		}
 		temp.toMap();
-		System.out.println(temp.getItems());
+//		System.out.println(temp.getItems());
 		return result.toString();
 	}
 

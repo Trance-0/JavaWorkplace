@@ -7,7 +7,7 @@ import module.FileSaver;
 
 public class DataSet {
 
-	private final String poolList = "";
+	private final String poolList = "闪焰的驻足,奔行世间";
 	private String path;
 
 	private String pool;
@@ -41,7 +41,7 @@ public class DataSet {
 
 	public DataSet(HashMap<String, ArrayList<String>> Map) {
 		setpath();
-		System.out.println(Map);
+//		System.out.println(Map);
 		Items = new HashMap<String, Integer>();
 		for (String i : Map.keySet()) {
 			if (i.compareTo("userName") == 0) {
@@ -68,6 +68,7 @@ public class DataSet {
 	public boolean setpool(String po) {
 		if (poolList.contains(po)) {
 			pool = po;
+			this.toMap();
 			return true;
 		}
 		return false;
@@ -144,6 +145,7 @@ public class DataSet {
 		no4count = 0;
 		totalcount = 0;
 		Items = new HashMap<String, Integer>();
+		this.toMap();
 	}
 
 	public void toMap() {

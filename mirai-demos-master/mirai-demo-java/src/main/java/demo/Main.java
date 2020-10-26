@@ -90,14 +90,14 @@ public class Main {
 						event.getGroup().sendMessage(quote.plus(a.simulate(event.getSenderName(), 100)));
 					} else if (msgString.equals("/help")) {
 						event.getGroup().sendMessage("自定义抽卡连数：/");
-					} else if (msgString.contains("/swichPool")) {
-						String pool = msgString.substring(msgString.indexOf("/swichPool") + 13,
-								msgString.indexOf("/swichPool") + 17);
+					} else if (msgString.contains("/switch")) {
+						String pool = msgString.substring(msgString.indexOf("/switch") + 8, msgString.length());
+						event.getGroup().sendMessage("正在将卡池设置为：" + pool);
 						try {
 							if (a.loadSaving(event.getSenderName()).setpool(pool)) {
 								event.getGroup().sendMessage("卡池设置成功。");
 							} else {
-								event.getGroup().sendMessage("卡池设置失败，请检查输入是否有误。");
+								event.getGroup().sendMessage("卡池设置失败，请检查输入是否有误，或我是否有误。");
 							}
 						} catch (Exception e) {
 							event.getGroup().sendMessage("An error occured.");
