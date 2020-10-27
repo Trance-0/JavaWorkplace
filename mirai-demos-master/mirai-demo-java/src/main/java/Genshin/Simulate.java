@@ -35,8 +35,13 @@ public class Simulate {
 	}
 
 	public void Init(String pool) throws IOException {
-
-		FileLoader fl = new FileLoader(System.getProperty("user.dir") + "\\Resources\\textFile\\" + pool + ".txt");
+		String temp;
+		if (System.getProperty("os.name").contains("Mac")) {
+			temp = System.getProperty("user.dir") + "/Resources/textFile/"+ pool + ".txt";
+		} else {
+			temp = System.getProperty("user.dir") + "\\Resources\\textFile\\"+ pool + ".txt";
+		}
+		FileLoader fl = new FileLoader(temp);
 		dir = fl.ReadFileByMap();
 		System.out.print(dir);
 		title = dir.get("title").get(0);

@@ -25,7 +25,13 @@ import net.mamoe.mirai.utils.BotConfiguration;
 public class Main {
 
 	public static void main(String[] args) throws InterruptedException, LoginFailedException, IOException {
-		FileLoader fl = new FileLoader(System.getProperty("user.dir") + "/Resources/textFile/DirectoryMap.txt");
+		String path;
+		if (System.getProperty("os.name").contains("Mac")) {
+			path = System.getProperty("user.dir") + "/Resources/textFile/DirectoryMap.txt";
+		} else {
+			path = System.getProperty("user.dir") + "\\Resources\\textFile\\DirectoryMap.txt";
+		}
+		FileLoader fl = new FileLoader(path);
 		HashMap<ArrayList<String>, String> directory = fl.ReadFileByDirMap();
 		final Bot bot = BotFactoryJvm.newBot(3149920162L, "Wu135246!", new BotConfiguration() {
 			{
