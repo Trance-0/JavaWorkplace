@@ -108,7 +108,16 @@ public class Main {
 						} catch (Exception e) {
 							event.getGroup().sendMessage("An error occured.");
 						}
-					} else if (msgString.contains("/summary")) {
+					}  else if (msgString.contains("/summon")) {
+						final QuoteReply quote = new QuoteReply(event.getSource());
+						int times = 0;
+						try {
+							times = Integer.parseInt(msgString.substring(msgString.indexOf("/summon") + 8, msgString.length()));
+						} catch (Exception e) {
+							event.getGroup().sendMessage(ex.getResponse("ilegalArgumentInSimulation"));
+						}
+						event.getGroup().sendMessage(quote.plus(a.simulate(event.getSenderName(), times)));
+					}else if (msgString.contains("/summary")) {
 						try {
 							HashMap<String, Integer> items = new HashMap<String, Integer>();
 							items = a.loadSaving(event.getSenderName()).getItems();
