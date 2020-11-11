@@ -1,4 +1,4 @@
-package C5;
+package C6;
 
 import java.io.BufferedReader;
 import java.io.IOException;
