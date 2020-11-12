@@ -32,7 +32,6 @@ public class H01137 {
 		public cow(int i, int l) {
 			index = i;
 			if (l == 1) {
-
 				isill = true;
 			} else {
 				isill = false;
@@ -66,10 +65,16 @@ public class H01137 {
 				if (fomer.isill && !current.isill) {
 					R = Math.min(R, current.index - fomer.index);
 				}
-
-				if (former.&&current.index - fomer.index >= R) {
-					sum++;
-				}
+			}
+		}
+//		System.out.println(R);
+		for(int i = 1; i < length; i++) {
+			System.out.println("distance"+(cows.get(i).index - cows.get(i-1).index)+cows.get(i).isill);
+			if ((cows.get(i).index - cows.get(i-1).index >= R)&&cows.get(i).isill) {
+				sum++;
+			}
+			if (i==1&&cows.get(i-1).isill) {
+				sum++;
 			}
 		}
 		System.out.println(sum);
