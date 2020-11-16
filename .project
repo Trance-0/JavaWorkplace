@@ -3,6 +3,7 @@
 	<name>USACO</name>
 	<comment></comment>
 	<projects>
+		<project>master</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
