@@ -21,22 +21,13 @@ public class H01086 {
 			st = new StringTokenizer(br.readLine());
 			command = st.nextToken();
 			if (command.compareTo("i") == 0) {
-				input = st.nextToken();
-				text.add(index, input);
-				index++;
+				insert(st);
 			} else if (command.compareTo("b") == 0) {
-				if (index - 1 >= 0) {
-					index--;
-				}
+				back();
 			} else if (command.compareTo("f") == 0) {
-				if (index + 1 < text.size()) {
-					index++;
-				}
+				forward();
 			} else {
-				if (text.isEmpty() && index < text.size()) {
-					text.remove(index);
-					index--;
-				}
+				delete();
 			}
 		}
 		StringBuilder sb = new StringBuilder();
@@ -47,6 +38,25 @@ public class H01086 {
 		}
 		System.out.println(sb.toString());
 	}
+	public void back() {
+		if (index > 0) {
+			index--;
+		}
+	}
+	public void forward() {
+		if (index < text.size()) {
+			index++;
+		}
+	}
+	public void delete() {
+		if (!text.isEmpty() && index< text.size()) {
+			text.remove(index);
+		}
+	}
+public void insert(StringTokenizer st){input = st.nextToken();
+text.add(index, input);
+forward();
+}
 
 	public static void main(String[] args) throws IOException {
 		H01086 a = new H01086();
