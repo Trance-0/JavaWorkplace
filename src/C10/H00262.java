@@ -9,7 +9,7 @@ import java.util.StringTokenizer;
 public class H00262 {
 	private int size;
 	private int quesion;
-	private String[][] grid;
+	private int[][] grid;
 	private LinkedList<int[]> pos;
 	private String temp;
 	private String key;
@@ -20,12 +20,12 @@ public class H00262 {
 		StringTokenizer st = new StringTokenizer(br.readLine());
 		size = Integer.parseInt(st.nextToken());
 		quesion = Integer.parseInt(st.nextToken());
-		grid = new String[size][size];
+		grid = new int[size][size];
 		for (int i = 0; i < size; i++) {
 			temp = br.readLine();
 			for (int j = 0; j < size; j++) {
 				key = temp.substring(j, j + 1);
-				grid[i][j] = key;
+				grid[i][j] = Integer.parseInt(key);
 			}
 		}
 		String nextline = br.readLine();
@@ -34,9 +34,10 @@ public class H00262 {
 			st = new StringTokenizer(nextline);
 			pos = new LinkedList<int[]>();
 			addpos(Integer.parseInt(st.nextToken()) - 1, Integer.parseInt(st.nextToken()) - 1);
+//			System.out.println(grid[pos.get(index)[0]][pos.get(index)[1]]);
 			while (index < pos.size()) {
 				int[] shit = pos.get(index);
-				String prevalue = grid[shit[0]][shit[1]];
+				int prevalue = grid[shit[0]][shit[1]];
 //				System.out.println(prevalue);
 				addpospos(shit[0], shit[1] + 1, prevalue);
 				addpospos(shit[0], shit[1] - 1, prevalue);
@@ -50,12 +51,12 @@ public class H00262 {
 		}
 	}
 
-	private void addpospos(int x, int y, String prevalue) {
+	private void addpospos(int x, int y, int prevalue) {
 		int[] shit = new int[2];
 		shit[0] = x;
 		shit[1] = y;
 		if (x >= 0 && x < size && y >= 0 && y < size) {
-			if (containpos(x, y) && grid[y][x].compareTo(prevalue) != 0) {
+			if (containpos(x, y) && grid[x][y] + prevalue == 1) {
 				pos.add(shit);
 			}
 		}

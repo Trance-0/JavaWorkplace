@@ -10,42 +10,52 @@ public class H01132 {
 	private int xsize;
 	private int ysize;
 	private String[][] grid;
-	private LinkedList<int[]> pos = new LinkedList<int[]>();
+	private LinkedList<int[]> pos;
 	private String temp;
 	private String key;
 	private int index = 0;
 
 	public H01132() throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		StringTokenizer st = new StringTokenizer(br.readLine());
-		xsize = Integer.parseInt(st.nextToken());
-		ysize = Integer.parseInt(st.nextToken());
-		grid = new String[ysize][xsize];
-		for (int i = 0; i < ysize; i++) {
-			temp = br.readLine();
-			for (int j = 0; j < xsize; j++) {
-				key = temp.substring(j, j + 1);
-				grid[i][j] = key;
-				if (key.compareTo("@") == 0) {
-					addpos(j, i);
+		String nextline = br.readLine();
+		StringTokenizer st = new StringTokenizer(nextline);
+		while (true) {
+			index = 0;
+			pos = new LinkedList<int[]>();
+			xsize = Integer.parseInt(st.nextToken());
+			ysize = Integer.parseInt(st.nextToken());
+			if (xsize == 0 && ysize == 0) {
+				break;
+			}
+			grid = new String[ysize][xsize];
+			for (int i = 0; i < ysize; i++) {
+				temp = br.readLine();
+				for (int j = 0; j < xsize; j++) {
+					key = temp.substring(j, j + 1);
+					grid[i][j] = key;
+					if (key.compareTo("@") == 0) {
+						addpos(j, i);
+					}
 				}
 			}
-		}
-		for (int i = 0; i < ysize; i++) {
-			System.out.println();
-			for (int j = 0; j < xsize; j++) {
-				System.out.print(grid[i][j] + " ");
+//			for (int i = 0; i < ysize; i++) {
+//				System.out.println();
+//				for (int j = 0; j < xsize; j++) {
+//					System.out.print(grid[i][j] + " ");
+//				}
+//			}
+			while (index < pos.size()) {
+				int[] shit = pos.get(index);
+				addpospos(shit[0], shit[1] + 1);
+				addpospos(shit[0], shit[1] - 1);
+				addpospos(shit[0] + 1, shit[1]);
+				addpospos(shit[0] - 1, shit[1]);
+				index++;
 			}
+			System.out.println(pos.size());
+			nextline = br.readLine();
+			st = new StringTokenizer(nextline);
 		}
-		while (index < pos.size()) {
-			int[] shit = pos.get(index);
-			addpospos(shit[0], shit[1] + 1);
-			addpospos(shit[0], shit[1] - 1);
-			addpospos(shit[0] + 1, shit[1]);
-			addpospos(shit[0] - 1, shit[1]);
-			index++;
-		}
-		System.out.println(pos.size());
 	}
 
 	private void addpospos(int x, int y) {
