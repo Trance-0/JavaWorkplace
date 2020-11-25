@@ -10,6 +10,8 @@ public class H00262 {
 	private int size;
 	private int quesion;
 	private int[][] grid;
+//get index of pos
+	private LinkedList<LinkedList<int[]>> sum;
 	private LinkedList<int[]> pos;
 	private String temp;
 	private String key;
