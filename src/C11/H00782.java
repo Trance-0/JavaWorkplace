@@ -17,6 +17,7 @@ public class H00782 {
 		}
 	}
 
+	private node loc;
 	private int L;
 	private int R;
 	private int C;
@@ -25,7 +26,8 @@ public class H00782 {
 	private String temp;
 	private String[][][] maze;
 	private LinkedList<node> his = new LinkedList<node>();
-	private LinkedList<int[]> pos = new LinkedList<int[]>();
+	private boolean pos[];
+	private node lastnode;
 
 	public H00782() throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -59,6 +61,12 @@ public class H00782 {
 //				}
 //				System.out.println();
 //			}
+			int find = findpath();
+			if (find == 0) {
+				System.out.println("Trapped!");
+			} else {
+				System.out.println("Escaped in " + find + " minute(s).");
+			}
 			st = new StringTokenizer(br.readLine());
 			L = Integer.parseInt(st.nextToken());
 			R = Integer.parseInt(st.nextToken());
@@ -75,46 +83,65 @@ public class H00782 {
 	}
 
 	public int findpath() {
+		his = new LinkedList<node>();
+		pos = new boolean[L * R * C];
 		his.add(new node(null, start));
+
+		node lastnode = new node(null, start);
+		pos[start[0] * R * C + start[1] * C + start[2]] = true;
 		int index = 0;
 		int result = 0;
 		while (index < his.size()) {
-			node loc = his.get(index);
-			L = loc.to[0];
-			R = loc.to[1];
-			C = loc.to[2];
-			int[] test = new int[3];
-			if (comparepos(test, end)) {
+			loc = his.get(index);
+			int l = loc.to[0];
+			int r = loc.to[1];
+			int c = loc.to[2];
+			if (comparepos(loc.to, end)) {
+				lastnode = loc;
+				System.out.print(loc.to[0] + "" + loc.to[1] + "" + loc.to[2]);
 				break;
 			}
-			test = createpos(L + 1, R, C);
-			if (maze[L + 1][R][C].compareTo(".") == 0) {
-				his.add(new node(loc, test));
-			}
-			test = createpos(L - 1, R, C);
-			if (maze[L - 1][R][C].compareTo(".") == 0) {
-				his.add(new node(loc, test));
-			}
-			test = createpos(L, R + 1, C);
-			if (maze[L][R + 1][C].compareTo(".") == 0) {
-				his.add(new node(loc, test));
-			}
-			test = createpos(L, R - 1, C);
-			if (maze[L][R - 1][C].compareTo(".") == 0) {
-				his.add(new node(loc, test));
-			}
-			test = createpos(L, R, C + 1);
-			if (maze[L][R][C + 1].compareTo(".") == 0) {
-				his.add(new node(loc, test));
-			}
-			test = createpos(L, R, C - 1);
-			if (maze[L][R][C - 1].compareTo(".") == 0) {
-				his.add(new node(loc, test));
-			}
+			addpossiblenode(l + 1, r, c, loc);
+			addpossiblenode(l - 1, r, c, loc);
+			addpossiblenode(l, r + 1, c, loc);
+			addpossiblenode(l, r - 1, c, loc);
+			addpossiblenode(l, r, c + 1, loc);
+			addpossiblenode(l, r, c - 1, loc);
 			index++;
 		}
-		while 
+//		System.out.println(pos.size());
+		while (lastnode.from != null) {
+			lastnode = lastnode.from;
+			maze[lastnode.to[0]][lastnode.to[1]][lastnode.to[2]] = "*";
+			result++;
+		}
+		for (int i = 0; i < L; i++) {
+			for (int j = 0; j < R; j++) {
+				for (int k = 0; k < C; k++) {
+					System.out.print(maze[i][j][k]);
+				}
+				System.out.println();
+			}
+			System.out.println();
+		}
 		return result;
+	}
+
+	private void addpossiblenode(int l, int r, int c, node last) {
+//		System.out.println("l" + l + "r" + r + "c" + c);
+		if (l >= 0 && l < L && r >= 0 && r < R && c >= 0 && c < C) {
+//			System.out.println("requirement passed!");
+			int[] test = createpos(l, r, c);
+			if (maze[l][r][c].compareTo("#") != 0 && containpos(test)) {
+				his.add(new node(last, test));
+				pos[test[0] * R * C + test[1] * C + test[2]] = true;
+			}
+		}
+	}
+
+	private boolean containpos(int[] test) {
+//		System.out.print(pos[test[0] * R + test[1] * C + test[2]]);
+		return !pos[test[0] * R * C + test[1] * C + test[2]];
 	}
 
 	private boolean comparepos(int[] i, int[] j) {
