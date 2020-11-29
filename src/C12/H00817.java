@@ -37,21 +37,25 @@ public class H00817 {
 		}
 	}
 
+	private int time;
 	private int length;
 	private LinkedList<activity> test;
+	private int result;
 
 	public H00817() throws IOException {
 		BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
 		StringTokenizer st = new StringTokenizer(bf.readLine());
 		length = Integer.parseInt(st.nextToken());
+		test = new LinkedList<activity>();
 		for (int i = 0; i < length; i++) {
 			st = new StringTokenizer(bf.readLine());
 			test.add(new activity(Integer.parseInt(st.nextToken()), Integer.parseInt(st.nextToken())));
 		}
 		test.sort(new ActivityComparator());
-//		for () {
-//			
-//		}
+		for (activity a : test) {
+
+			System.out.println("[" + a.start + a.end + "]");
+		}
 	}
 
 	public static void main(String[] args) throws IOException {
