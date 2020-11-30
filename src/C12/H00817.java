@@ -16,24 +16,12 @@ public class H00817 {
 			start = s;
 			end = e;
 		}
-
-		public boolean isok(activity a) {
-			return a.start > this.end;
-		}
-
-		public int time(activity a) {
-			return a.end - this.end;
-		}
-
-		public int size() {
-			return end - start;
-		}
 	}
 
 	private class ActivityComparator implements Comparator<activity> {
 		@Override
 		public int compare(activity o1, activity o2) {
-			return o1.start - o2.start;
+			return o1.end- o2.end;
 		}
 	}
 
@@ -52,10 +40,17 @@ public class H00817 {
 			test.add(new activity(Integer.parseInt(st.nextToken()), Integer.parseInt(st.nextToken())));
 		}
 		test.sort(new ActivityComparator());
+		time=0;
+		result=0;
 		for (activity a : test) {
-
-			System.out.println("[" + a.start + a.end + "]");
+			System.out.println("[" + a.start +","+ a.end + "]");
+			if(a.start>=time) {
+				System.out.println("-"+result+"-[" + a.start +","+ a.end + "]-"+result+"-");
+				result++;
+				time=a.end;
+			}
 		}
+		System.out.println(result);
 	}
 
 	public static void main(String[] args) throws IOException {
