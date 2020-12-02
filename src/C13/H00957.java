@@ -16,36 +16,47 @@ public class H00957 {
 		data = new LinkedList<LinkedList<Integer>>();
 		st = new StringTokenizer(br.readLine());
 		data.add(new LinkedList<Integer>());
-		data.getLast().add( Integer.parseInt(st.nextToken()));
+		data.getLast().add(Integer.parseInt(st.nextToken()));
 		for (int i = 1; i < length; i++) {
 			int next = Integer.parseInt(st.nextToken());
 			boolean canbeplaced = false;
 			for (int j = 0; j < data.size(); j++) {
 				if (next > data.get(j).peekLast()) {
-//					System.out.println(j);
 					data.get(j).add(next);
 					canbeplaced = true;
 				}
 			}
 			if (!canbeplaced) {
-				LinkedList<Integer> branch=new LinkedList<Integer>();
-				LinkedList<Integer> master=data.getLast();
-				for(int element:master) {
-					if (element<next) {
-						branch.add(element);
+				LinkedList<Integer> branch = new LinkedList<Integer>();
+				for (LinkedList<Integer> k : data) {
+					LinkedList<Integer> master = new LinkedList<Integer>();
+					int count = 0;
+					for (int e : k) {
+						if (e < next) {
+							master.add(e);
+						}
+						if (master.size() > branch.size()) {
+							branch = master;
+						}
 					}
 				}
 				branch.add(next);
+				printlist(branch);
 				data.add(branch);
 			}
 		}
 		LinkedList<Integer> tempbest = new LinkedList<Integer>();
 		for (LinkedList<Integer> i : data) {
+//			printlist(i);
 			if (i.size() > tempbest.size()) {
 				tempbest = i;
 			}
 		}
 		System.out.println("max=" + tempbest.size());
+		printlist(tempbest);
+	}
+
+	private void printlist(LinkedList tempbest) {
 		StringBuilder sb = new StringBuilder();
 		for (int i = 0; i < tempbest.size(); i++) {
 			if (i != 0) {
