@@ -16,24 +16,31 @@ public class H00957 {
 		data = new LinkedList<LinkedList<Integer>>();
 		st = new StringTokenizer(br.readLine());
 		data.add(new LinkedList<Integer>());
-		int last = Integer.parseInt(st.nextToken());
-		data.get(0).add(last);
+		data.getLast().add( Integer.parseInt(st.nextToken()));
 		for (int i = 1; i < length; i++) {
 			int next = Integer.parseInt(st.nextToken());
 			boolean canbeplaced = false;
 			for (int j = 0; j < data.size(); j++) {
 				if (next > data.get(j).peekLast()) {
+//					System.out.println(j);
 					data.get(j).add(next);
 					canbeplaced = true;
 				}
 			}
 			if (!canbeplaced) {
-				data.add(new LinkedList<Integer>());
-				data.getLast().add(next);
+				LinkedList<Integer> branch=new LinkedList<Integer>();
+				LinkedList<Integer> master=data.getLast();
+				for(int element:master) {
+					if (element<next) {
+						branch.add(element);
+					}
+				}
+				branch.add(next);
+				data.add(branch);
 			}
 		}
 		LinkedList<Integer> tempbest = new LinkedList<Integer>();
-		for (LinkedList i : data) {
+		for (LinkedList<Integer> i : data) {
 			if (i.size() > tempbest.size()) {
 				tempbest = i;
 			}
