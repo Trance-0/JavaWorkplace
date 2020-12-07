@@ -35,7 +35,7 @@ public class H206b {
 		}
 	}
 
-	public static void main(String[] args) throws IOException {
+	public static void H206b(String[] args) throws IOException {
 		H206b a = new H206b();
 	}
 }
