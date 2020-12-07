@@ -7,59 +7,55 @@ import java.util.LinkedList;
 import java.util.StringTokenizer;
 
 public class H00957 {
-	private LinkedList<LinkedList<Integer>> data;
+	private int[] data;
+	private int[] l;
 
 	public H00957() throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		StringTokenizer st = new StringTokenizer(br.readLine());
 		int length = Integer.parseInt(st.nextToken());
-		data = new LinkedList<LinkedList<Integer>>();
+		data = new int[length];
+		l= new int[length];
 		st = new StringTokenizer(br.readLine());
-		data.add(new LinkedList<Integer>());
-		data.getLast().add(Integer.parseInt(st.nextToken()));
-		for (int i = 1; i < length; i++) {
-			int next = Integer.parseInt(st.nextToken());
-			boolean canbeplaced = false;
-			for (int j = 0; j < data.size(); j++) {
-				if (next > data.get(j).peekLast()) {
-					data.get(j).add(next);
-					canbeplaced = true;
-				}
-			}
-			if (!canbeplaced) {
-				LinkedList<Integer> branch = new LinkedList<Integer>();
-				for (LinkedList<Integer> k : data) {
-					LinkedList<Integer> master = new LinkedList<Integer>();
-					int count = 0;
-					for (int e : k) {
-						if (e < next) {
-							master.add(e);
-						}
-						if (master.size() > branch.size()) {
-							branch = master;
-						}
+		int max=1;
+		int maxindex=0;
+		for (int i = 0; i < length; i++) {
+			data[i] = Integer.parseInt(st.nextToken());
+			for (int j = i;j>=0;j--) {
+				if (data[j] < data[i]) {
+					l[i]=l[j];
+					if(l[i]>=max) {
+						max=l[i]+1;
+						maxindex=i;
 					}
+					break;
 				}
-				branch.add(next);
-				printlist(branch);
-				data.add(branch);
 			}
+			l[i]++;
 		}
-		LinkedList<Integer> tempbest = new LinkedList<Integer>();
-		for (LinkedList<Integer> i : data) {
+	LinkedList<Integer>temp=new LinkedList<Integer>();
+	temp.addLast(data[maxindex]);
+	int lastindex=max;
+	System.out.println("max=" + max);
+		for (int i=maxindex-1;i>=0;i--) {
 //			printlist(i);
-			if (i.size() > tempbest.size()) {
-				tempbest = i;
+//			System.out.println(l[i]+1);
+			if (l[i]+1==lastindex && data[i]<data[maxindex]) {
+				temp.addLast(data[i]);
+				max=data[i];
+				lastindex--;
+				if(lastindex<0) {
+					break;
+				}
 			}
 		}
-		System.out.println("max=" + tempbest.size());
-		printlist(tempbest);
-	}
+	printlist(temp);
+}
 
-	private void printlist(LinkedList tempbest) {
+	private void printlist(LinkedList<Integer> tempbest) {
 		StringBuilder sb = new StringBuilder();
-		for (int i = 0; i < tempbest.size(); i++) {
-			if (i != 0) {
+		for (int i = tempbest.size()-1; i>=0; i--) {
+			if (i != tempbest.size()-1) {
 				sb.append(" ");
 			}
 			sb.append(tempbest.get(i));

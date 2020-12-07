@@ -5,11 +5,11 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
-public class H206b {
+public class H260b {
 	private boolean[] ce;
 	private int[][] data;
 
-	public H206b() throws IOException {
+	public H260b() throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		StringTokenizer st = new StringTokenizer(br.readLine());
 		data = new int[Integer.parseInt(st.nextToken())][2];
@@ -35,7 +35,7 @@ public class H206b {
 		}
 	}
 
-	public static void H206b(String[] args) throws IOException {
-		H206b a = new H206b();
+	public static void H260b(String[] args) throws IOException {
+		H260b a = new H260b();
 	}
 }

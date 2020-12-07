@@ -27,10 +27,10 @@ public class H00959 {
 		int out = Integer.parseInt(st.nextToken());
 		int greatestindex = 0;
 		while (in != 0 && out != 0) {
-//			for (int i : bestcount) {
-//				System.out.print(i + " ");
-//			}
-//			System.out.println();
+			for (int i : bestcount) {
+				System.out.print(i + " ");
+			}
+			System.out.println();
 			if (bestcount[in] + mine[out] > bestcount[out]) {
 				bestcount[out] = bestcount[in] + mine[out];
 				if (bestcount[out] > bestcount[greatestindex]) {
@@ -54,7 +54,7 @@ public class H00959 {
 		System.out.println(result);
 	}
 
-	public static void H00959(String[] args) throws IOException {
+	public static void main(String[] args) throws IOException {
 		H00959 a = new H00959();
 	}
 }
