@@ -7,11 +7,11 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.StringTokenizer;
 
-public class Main {
+public class H260a {
 	private long[][] grassland;
 	private long cowsize;
 
-	public Main() throws IOException {
+	public H260a() throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		StringTokenizer st = new StringTokenizer(br.readLine());
 		cowsize = Long.parseLong(st.nextToken());
@@ -86,6 +86,6 @@ public class Main {
 	}
 
 	public static void main(String[] args) throws IOException {
-		Main a = new Main();
+		H260a a = new H260a();
 	}
 }
