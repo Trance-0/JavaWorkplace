@@ -6,13 +6,13 @@ import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.StringTokenizer;
 
-public class M1 {
+public class B1 {
 	private int[] numbers = new int[7];
 	private int a;
 	private int b;
 	private int c;
 
-	public M1() throws IOException {
+	public B1() throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		String input = br.readLine();
 		StringTokenizer st = new StringTokenizer(input);
@@ -27,6 +27,6 @@ public class M1 {
 	}
 
 	public static void main(String[] args) throws IOException {
-		M1 a = new M1();
+		B1 a = new B1();
 	}
 }

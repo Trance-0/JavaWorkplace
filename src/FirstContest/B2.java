@@ -6,12 +6,12 @@ import java.io.InputStreamReader;
 import java.util.LinkedList;
 import java.util.StringTokenizer;
 
-public class M2 {
+public class B2 {
 	private int length;
 	private int result;
 	private int[] pasture;
 
-	public M2() throws IOException {
+	public B2() throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		length = Integer.parseInt(br.readLine());
 		pasture = new int[length];
@@ -39,6 +39,6 @@ public class M2 {
 	}
 
 	public static void main(String[] args) throws IOException {
-		M2 a = new M2();
+		B2 a = new B2();
 	}
 }

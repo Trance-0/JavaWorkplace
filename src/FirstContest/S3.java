@@ -7,13 +7,13 @@ import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.StringTokenizer;
 
-public class M3 {
+public class S3 {
 	private int length;
 	private int[] result;
 	private LinkedList<int[]> tonorth;
 	private LinkedList<int[]> toeast;
 
-	public M3() throws IOException {
+	public S3() throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		StringTokenizer st = new StringTokenizer(br.readLine());
 		length = Integer.parseInt(st.nextToken());
@@ -54,44 +54,40 @@ public class M3 {
 
 		});
 		for (int i = 0; i < tonorth.size(); i++) {
-
 			for (int j = 0; j < toeast.size(); j++) {
 				if (i >= 0 && j >= 0) {
 					int[] tempn = tonorth.get(i);
 					int[] tempe = toeast.get(j);
-					System.out.println(tempn[0] + "," + tempn[1]);
+//					System.out.println(tempn[0] + "," + tempn[1]);
 					if (tempe[0] <= tempn[0] && tempe[1] >= tempn[1]) {
 						int xlen = tempn[0] - tempe[0];
 						int ylen = tempe[1] - tempn[1];
 						if (xlen > ylen) {
-							result[tempe[2]] = xlen;
+							result[tempn[2]]++;
+							result[tempn[2]] += result[tempe[2]];
 							toeast.remove(tempe);
 							j--;
-							System.out.println(tempe[0] + "," + tempe[1] + " is removed collide with " + tempn[0] + ","
-									+ tempn[1]);
+//							System.out.println(tempe[0] + "," + tempe[1] + " is removed collide with " + tempn[0] + ","
+//									+ tempn[1]);
 						}
 						if (xlen < ylen) {
-							result[tempn[2]] = ylen;
+							result[tempe[2]]++;
+							result[tempe[2]] += result[tempn[2]];
 							tonorth.remove(tempn);
-							System.out.println(tempn[0] + "," + tempn[1] + " is removed collide with " + tempe[0] + ","
-									+ tempe[1]);
 							i--;
+//							System.out.println(tempn[0] + "," + tempn[1] + " is removed collide with " + tempe[0] + ","
+//									+ tempe[1]);
 						}
 					}
 				}
 			}
 		}
 		for (int i : result) {
-			if (i != 0) {
-				System.out.println(i);
-			} else {
-
-				System.out.println("Infinity");
-			}
+			System.out.println(i);
 		}
 	}
 
 	public static void main(String[] args) throws IOException {
-		M3 a = new M3();
+		S3 a = new S3();
 	}
 }
