@@ -3,25 +3,25 @@ package C21;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.StringTokenizer;
 
-public class H261A {
-	private ArrayList<ArrayList<Integer>> pat;
+public class H261AA {
+	private LinkedList<LinkedList<Integer>> pat;
 	private int[][] contain;
 	private int[] tra;
 	private int N;
 	private int M;
 	private int K;
 
-	public H261A() throws IOException {
+	public H261AA() throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		StringTokenizer st = new StringTokenizer(br.readLine());
 		N = Integer.parseInt(st.nextToken());
 		M = Integer.parseInt(st.nextToken());
 		K = Integer.parseInt(st.nextToken());
 		tra = new int[N];
-		pat = new ArrayList<ArrayList<Integer>>();
+		pat = new LinkedList<LinkedList<Integer>>();
 		contain = new int[N][2];
 		for (int i = 0; i < N; i++) {
 			tra[i] = i + 1;
@@ -43,7 +43,7 @@ public class H261A {
 			if (contain[element - 1][0] != 0) {
 				continue;
 			} else {
-				ArrayList<Integer> temp = new ArrayList<Integer>();
+				LinkedList<Integer> temp = new LinkedList<Integer>();
 				indexoflist++;
 				int indexofnum = 0;
 				temp.add(element);
@@ -67,7 +67,7 @@ public class H261A {
 //			System.out.println();
 //		}
 		for (int i = 0; i < N; i++) {
-			ArrayList<Integer> temp = pat.get(contain[i][0] - 1);
+			LinkedList<Integer> temp = pat.get(contain[i][0] - 1);
 			System.out.println(temp.get((K + contain[i][1]) % temp.size()));
 		}
 	}
@@ -79,6 +79,6 @@ public class H261A {
 	}
 
 	public static void main(String[] args) throws IOException {
-		H261A a = new H261A();
+		H261AA a = new H261AA();
 	}
 }

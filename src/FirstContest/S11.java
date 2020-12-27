@@ -4,35 +4,68 @@ package FirstContest;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.StringTokenizer;
 
 public class S11 {
-	private int[][] logs;
+	private class node {
+		private ArrayList<Integer> child;
+		private int size;
+
+		public node() {
+			size = 0;
+			child = new ArrayList<Integer>();
+		}
+
+		private void add(int i) {
+			child.add(i);
+			size++;
+		}
+	}
+
+	private node[] logs;
 	private boolean[] issick;
 	private int length;
-	private int remain;
+	private ArrayList<Integer> memory;
 
 	public S11() throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		length = Integer.parseInt(br.readLine());
-		remain = length - 1;
-		logs = new int[length - 1][2];
+		logs = new node[length];
 		issick = new boolean[length];
 		StringTokenizer st;
+		for (int i = 0; i < length; i++) {
+			logs[i] = new node();
+		}
 		for (int i = 0; i < length - 1; i++) {
 			st = new StringTokenizer(br.readLine());
-			logs[i][0] = Integer.parseInt(st.nextToken());
-			logs[i][1] = Integer.parseInt(st.nextToken());
+			int o = Integer.parseInt(st.nextToken()) - 1;
+			int p = Integer.parseInt(st.nextToken()) - 1;
+			logs[o].add(p);
+			logs[p].add(o);
 		}
 		int time = 0;
 		issick[0] = true;
-		while (remain > 0) {
-			for (int i = 0; i < length - 1; i++) {
-				if (issick[logs[i][0]] != issick[logs[i][1]]) {
-
+		memory = new ArrayList<Integer>();
+		memory.add(0);
+		int pro = 0;
+		int tail = 1;
+		while (pro < tail) {
+			int childsize = logs[memory.get(pro)].size;
+			int nonsick = 0;
+			for (int i = 0; i < childsize; i++) {
+				int child = logs[memory.get(pro)].child.get(i);
+				if (!issick[child]) {
+					issick[child] = true;
+					memory.add(child);
+					nonsick++;
+					tail++;
 				}
 			}
+			time += doublecost(nonsick);
+			time += nonsick;
+			pro++;
 		}
 		System.out.println(time);
 	}

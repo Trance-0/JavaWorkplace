@@ -3,20 +3,20 @@ package FirstContest;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.StringTokenizer;
 
 public class S1 {
 
-	private LinkedList<int[]> logs;
+	private ArrayList<int[]> logs;
 
 	private int length;
-	private LinkedList<Integer> memory;
+	private ArrayList<Integer> memory;
 
 	public S1() throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		length = Integer.parseInt(br.readLine());
-		logs = new LinkedList<int[]>();
+		logs = new ArrayList<int[]>();
 		StringTokenizer st;
 		for (int i = 0; i < length - 1; i++) {
 			st = new StringTokenizer(br.readLine());
@@ -26,10 +26,11 @@ public class S1 {
 			logs.add(temp);
 		}
 		int pro = 0;
-		memory = new LinkedList<Integer>();
+		int tail = 1;
+		memory = new ArrayList<Integer>();
 		memory.add(1);
 		int time = 0;
-		while (pro < memory.size()) {
+		while (pro < tail) {
 			int childsize = 0;
 			for (int i = 0; i < logs.size(); i++) {
 				if (i >= 0) {
@@ -45,6 +46,7 @@ public class S1 {
 						logs.remove(templog);
 						i--;
 					}
+					tail++;
 				}
 			}
 			time += doublecost(childsize);
@@ -94,7 +96,7 @@ public class S1 {
 		}
 	}
 
-	private void printlist(LinkedList<Integer> a) {
+	private void printlist(ArrayList<Integer> a) {
 		StringBuilder sb = new StringBuilder();
 		for (int i : a) {
 			sb.append(i);
