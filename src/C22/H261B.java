@@ -12,7 +12,6 @@ public class H261B {
 	private class line {
 		private ArrayList<Integer> element;
 		private int myname;
-		private int[] index = new int[200001];
 		private int[] addups;
 
 		public line(int xory) {
@@ -24,10 +23,11 @@ public class H261B {
 			element.sort(null);
 			addups = new int[element.size()];
 			int sum = 0;
+			System.out.print(this.myname+" : ");
 			for (int i = 0; i < element.size(); i++) {
-				index[element.get(i)] = i + 1;// the index of needed element
-				addups[i] = sum;// where to find adddups
 				sum += element.get(i);
+				addups[i] = sum;// where to find adddups
+				System.out.print(sum+ " ");
 			}
 		}
 	}
@@ -72,16 +72,21 @@ public class H261B {
 		for (line i : y) {
 			i.sort();
 		}
-		for (line i : x) {
-			if (i.element.size() > 1) {
-				for (int ty : i.element) {
+		for (line tempx : x) {
+			if (tempx.element.size() > 1) {
+				for (int i = 0; i < tempx.element.size(); i++) {
+					int ty = tempx.element.get(i);
 					if (hy[ty] != 0) {
-						line j = y.get(hy[ty] - 1);
-						if (j.element.size() > 1) {
-							int indexofx = i.index[i.myname];
-							int xaddup = i.addups[i.element.size() - 1] - 2 * j.addups[indexofx] - indexofx * i.myname;
-							int indexofy = j.index[j.myname];
-							int yaddup = j.addups[j.element.size() - 1] - 2 * j.addups[indexofy] - indexofy * j.myname;
+						line tempy = y.get(hy[ty] - 1);
+						int j = tempy.element.indexOf(tempx.myname);
+						int tx = tempx.element.get(j);
+						if (tempy.element.size() > 1) {
+							int xaddup = tempx.addups[tempx.element.size() - 1] - 2 * tempx.addups[i]
+									- (2*i-tempx.element.size()) * tx;
+							int yaddup = tempy.addups[tempy.element.size() - 1] - 2 * tempx.addups[j]
+									- (2*j-tempy.element.size()) * ty;
+									System.out.println(xaddup+"xaddup"+yaddup+"yaddup");
+							sum += xaddup * yaddup;
 						}
 					}
 				}
