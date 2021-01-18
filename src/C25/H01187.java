@@ -37,7 +37,8 @@ public class H01187 {
                 if (findroot(i)==zero){
                     sum++;
                 }
-            // }System.out.println("=========================");
+            }
+            // System.out.println("=========================");
             System.out.println(sum);
             st = new StringTokenizer(br.readLine());
             n = Integer.parseInt(st.nextToken());
