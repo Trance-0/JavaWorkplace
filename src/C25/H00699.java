@@ -7,7 +7,7 @@ import java.io.StreamTokenizer;
 import java.util.StringTokenizer;
 
 public class H00699 {
-    private int[] x = { 14, 1, 2, 4, 7, 8, 11, 13 };
+    private int[] x = { -1, 1, 2, 4, 7, 8, 11, 13 };
     private int N;
 
     public H00699() throws IOException {
