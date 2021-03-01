@@ -4,78 +4,121 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Arrays;
+import java.util.Comparator;
+import java.util.LinkedList;
 import java.util.StringTokenizer;
 
+
 public class H01232 {
-    private long h;
-    private long w;
-    private long[] root;
-    private long[] xlength;
-    private long[] ylength;
-    private long sumoffence;
-    private long staticfence;
-    private int xi;
-    private int yi;
-    private int xm;
-    private int ym;
-    public H01232()throws IOException{
-        BufferedReader br=new BufferedReader(new InputStreamReader(System.in));
-        StringTokenizer st=new StringTokenizer(br.readLine());
-        w=Long.parseLong(st.nextToken());
-        h=Long.parseLong(st.nextToken());
-        int tw=Integer.parseInt(st.nextToken());
-        int th=Integer.parseInt(st.nextToken());
-        xlength=new long[tw];
-        ylength=new long[th];
-        int size=(tw+1)*(th+1);
-        root=new long[size];
-        long[]rawx=new long[tw];
-        for(int i=0;i<tw;i++){
-            rawx[i]=Long.parseLong(br.readLine());
+    public class line {
+        private int length;
+        private int a;
+        private int b;
+
+        public line(int c, int d, int l) {
+            length = l;
+            a = c;
+            b = d;
         }
-        Arrays.sort(rawx);
-        xlength[0]=rawx[0];
-        for(int i=1;i<tw;i++){
-            xlength[i]=rawx[i]-xlength[i-1];
-        }
-        Arrays.sort(xlength);
-        long[]rawy=new long[th];
-        for(int i=0;i<th;i++){
-            rawy[i]=Long.parseLong(br.readLine());
-        }
-        Arrays.sort(rawx);
-        ylength[0]=rawy[0];
-        for(int i=1;i<th;i++){
-            ylength[i]=rawy[i]-ylength[i-1];
-        }
-        Arrays.sort(ylength);
-        int xtop=tw+1;
-        int xdown=th*xtop;
-        for(int i=0;i<size;i++){
-            if(i<=xtop||i>xdown||i%xtop==0||(i+1)%xtop==0){
+    }
+
+    private int[] point;
+    private LinkedList<line> fence;
+    public int xlength;
+    public int ylength;
+    public int xsize;
+    public int ysize;
+
+    public H01232() throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        xlength = Integer.parseInt(st.nextToken());
+        ylength = Integer.parseInt(st.nextToken());
+        xsize = Integer.parseInt(st.nextToken()) + 2;
+        ysize = Integer.parseInt(st.nextToken()) + 2;
+        point = new int[(ysize) * (xsize)];
+        for (int i = 0; i < (ysize) * (xsize); i++) {
+            if (i <= xsize || i % xsize == 0 || i % xsize == 1 || i >= xsize * ysize - xsize) {
                 continue;
             }
-            root[i]=i;
+            point[i] = i;
         }
-        xi=tw;
-        yi=th;
-        for(int i=0;i<tw*th;i++){
-            staticfence+=findlongestlegalfence();
+        xsize -= 2;
+        ysize -= 2;
+        int[] dxpos = new int[xsize];
+        int[] dypos = new int[ysize];
+        fence = new LinkedList<line>();
+        for (int i = 0; i < xsize; i++) {
+            dxpos[i] = Integer.parseInt(br.readLine());
         }
-        sumoffence=h*(tw-1)+w*(th-1);
-        System.out.println(sumoffence-staticfence);
+        for (int i = 0; i < ysize; i++) {
+            dypos[i] = Integer.parseInt(br.readLine());
+        }
+        Arrays.sort(dxpos);// 2,4,5,6,10
+        int[] dxlength = tolength(dxpos, xlength);// 2,2,1,1,4,5
+        Arrays.sort(dypos);
+        int[] dylength = tolength(dxpos, ylength);
+        for (int i = 0; i < xsize; i++) { // parallel line
+            for (int j = 0; j < ysize + 1; j++) {
+                fence.add(new line((i + 1) * xsize + j - 1, (i + 1) * xsize + j, dylength[j]));
+            }
+        }
+        for (int i = 0; i < ysize; i++) {
+            for (int j = 0; j < xsize + 1; j++) {
+                fence.add(new line(i + 1 + (ysize + 2) * j, i + 1 + (ysize + 2) * (j + 1), dxlength[j]));
+            }
+        }
+        fence.sort(new Comparator<line>() {
+
+            @Override
+            public int compare(line o1, line o2) {
+                // TODO Auto-generated method stub
+                return o1.length - o2.length;
+            }
+
+        });
+        int needtocut = ysize*xsize;
+        while (needtocut > 0) {
+            line temp = fence.pollLast();
+            if (findfather(temp.a) == findfather(temp.b)) {
+                fence.addFirst(temp);
+            } else {
+                merge(temp.a, temp.b);
+                needtocut--;
+            }
+            System.out.println(needtocut);
+        }
+        int sum = 0;
+        for (line x : fence) {
+            sum += x.length;
+        }
+        System.out.println(sum);
     }
-    
-    private long findlongestlegalfence() {
-        long nicex=xlength[xi];
-        long nicey=ylength[xi];
-        for(){
-            
+
+
+    private int findfather(int b) {
+        if (point[b] == b) {
+            return b;
         }
-        return 0;
+        point[b] = findfather(point[b]);
+        return point[b];
+    }
+
+    private void merge(int a, int b) {
+        point[findfather(a)] = point[findfather(b)];
+    }
+
+    private int[] tolength(int[] dxpos, int flength) {
+        int[] result = new int[dxpos.length + 1];
+        result[0] = dxpos[0];
+        for (int i = 1; i < dxpos.length; i++) {
+            result[i] = dxpos[i] - dxpos[i - 1];
+        }
+        result[result.length-1] = flength - dxpos[dxpos.length - 1];
+        return result;
     }
 
     public static void main(String[] args) throws IOException {
-        H01232 a=new H01232();
+        H01232 a = new H01232();
     }
 }
