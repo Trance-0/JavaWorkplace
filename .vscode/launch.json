@@ -1,0 +1,594 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Java",
+            "type": "java",
+            "request": "launch",
+            "stopOnEntry": true,
+            "jdkPath": "${env:JAVA_HOME}/bin",
+            "cwd": "${fileDirname}",
+            "startupClass": "${fileBasenameNoExtension}",
+            "classpath": [
+                ".",
+                "${fileDirname}"
+            ]
+        },
+        {
+            "name": "Java Console App",
+            "type": "java",
+            "request": "launch",
+            "stopOnEntry": true,
+            "jdkPath": "${env:JAVA_HOME}/bin",
+            "cwd": "${fileDirname}",
+            "startupClass": "${fileBasenameNoExtension}",
+            "classpath": [
+                ".",
+                "${fileDirname}"
+            ],
+            "externalConsole": true
+        },
+        {
+            "type": "java",
+            "name": "Launch Current File",
+            "request": "launch",
+            "mainClass": "${file}"
+        },
+        {
+            "type": "java",
+            "name": "Launch H197a",
+            "request": "launch",
+            "mainClass": "USACO/C1.H197a",
+            "projectName": "USACO"
+        },
+        {
+            "type": "java",
+            "name": "Launch H201a",
+            "request": "launch",
+            "mainClass": "USACO/C1.H201a",
+            "projectName": "USACO"
+        },
+        {
+            "type": "java",
+            "name": "Launch H00262",
+            "request": "launch",
+            "mainClass": "USACO/C10.H00262",
+            "projectName": "USACO"
+        },
+        {
+            "type": "java",
+            "name": "Launch H01132",
+            "request": "launch",
+            "mainClass": "USACO/C10.H01132",
+            "projectName": "USACO"
+        },
+        {
+            "type": "java",
+            "name": "Launch H258a",
+            "request": "launch",
+            "mainClass": "USACO/C10.H258a",
+            "projectName": "USACO"
+        },
+        {
+            "type": "java",
+            "name": "Launch H00782",
+            "request": "launch",
+            "mainClass": "USACO/C11.H00782",
+            "projectName": "USACO"
+        },
+        {
+            "type": "java",
+            "name": "Launch H00866",
+            "request": "launch",
+            "mainClass": "USACO/C11.H00866",
+            "projectName": "USACO"
+        },
+        {
+            "type": "java",
+            "name": "Launch H00817",
+            "request": "launch",
+            "mainClass": "USACO/C12.H00817",
+            "projectName": "USACO"
+        },
+        {
+            "type": "java",
+            "name": "Launch H00819",
+            "request": "launch",
+            "mainClass": "USACO/C12.H00819",
+            "projectName": "USACO"
+        },
+        {
+            "type": "java",
+            "name": "Launch H01167",
+            "request": "launch",
+            "mainClass": "USACO/C12.H01167",
+            "projectName": "USACO"
+        },
+        {
+            "type": "java",
+            "name": "Launch H250f",
+            "request": "launch",
+            "mainClass": "USACO/C12.H250f",
+            "projectName": "USACO"
+        },
+        {
+            "type": "java",
+            "name": "Launch H00956",
+            "request": "launch",
+            "mainClass": "USACO/C13.H00956",
+            "projectName": "USACO"
+        },
+        {
+            "type": "java",
+            "name": "Launch H00957",
+            "request": "launch",
+            "mainClass": "USACO/C13.H00957",
+            "projectName": "USACO"
+        },
+        {
+            "type": "java",
+            "name": "Launch H260a",
+            "request": "launch",
+            "mainClass": "USACO/C14.H260a",
+            "projectName": "USACO"
+        },
+        {
+            "type": "java",
+            "name": "Launch H00959",
+            "request": "launch",
+            "mainClass": "USACO/C15.H00959",
+            "projectName": "USACO"
+        },
+        {
+            "type": "java",
+            "name": "Launch H00960",
+            "request": "launch",
+            "mainClass": "USACO/C15.H00960",
+            "projectName": "USACO"
+        },
+        {
+            "type": "java",
+            "name": "Launch Main",
+            "request": "launch",
+            "mainClass": "USACO/C15.Main",
+            "projectName": "USACO"
+        },
+        {
+            "type": "java",
+            "name": "Launch H133b",
+            "request": "launch",
+            "mainClass": "USACO/C16.H133b",
+            "projectName": "USACO"
+        },
+        {
+            "type": "java",
+            "name": "Launch H260b",
+            "request": "launch",
+            "mainClass": "USACO/C16.H260b",
+            "projectName": "USACO"
+        },
+        {
+            "type": "java",
+            "name": "Launch H260C",
+            "request": "launch",
+            "mainClass": "USACO/C17.H260C",
+            "projectName": "USACO"
+        },
+        {
+            "type": "java",
+            "name": "Launch H257B",
+            "request": "launch",
+            "mainClass": "USACO/C18.H257B",
+            "projectName": "USACO"
+        },
+        {
+            "type": "java",
+            "name": "Launch H257C",
+            "request": "launch",
+            "mainClass": "USACO/C18.H257C",
+            "projectName": "USACO"
+        },
+        {
+            "type": "java",
+            "name": "Launch H256C",
+            "request": "launch",
+            "mainClass": "USACO/C19.H256C",
+            "projectName": "USACO"
+        },
+        {
+            "type": "java",
+            "name": "Launch H258C",
+            "request": "launch",
+            "mainClass": "USACO/C19.H258C",
+            "projectName": "USACO"
+        },
+        {
+            "type": "java",
+            "name": "Launch H01136",
+            "request": "launch",
+            "mainClass": "USACO/C2.H01136",
+            "projectName": "USACO"
+        },
+        {
+            "type": "java",
+            "name": "Launch H660",
+            "request": "launch",
+            "mainClass": "USACO/C2.H660",
+            "projectName": "USACO"
+        },
+        {
+            "type": "java",
+            "name": "Launch NOIP2015P",
+            "request": "launch",
+            "mainClass": "USACO/C2.NOIP2015P",
+            "projectName": "USACO"
+        },
+        {
+            "type": "java",
+            "name": "Launch H197C",
+            "request": "launch",
+            "mainClass": "USACO/C20.H197C",
+            "projectName": "USACO"
+        },
+        {
+            "type": "java",
+            "name": "Launch H00900",
+            "request": "launch",
+            "mainClass": "USACO/C21.H00900",
+            "projectName": "USACO"
+        },
+        {
+            "type": "java",
+            "name": "Launch H00901",
+            "request": "launch",
+            "mainClass": "USACO/C21.H00901",
+            "projectName": "USACO"
+        },
+        {
+            "type": "java",
+            "name": "Launch H261A",
+            "request": "launch",
+            "mainClass": "USACO/C21.H261A",
+            "projectName": "USACO"
+        },
+        {
+            "type": "java",
+            "name": "Launch H261AA",
+            "request": "launch",
+            "mainClass": "USACO/C21.H261AA",
+            "projectName": "USACO"
+        },
+        {
+            "type": "java",
+            "name": "Launch H01176",
+            "request": "launch",
+            "mainClass": "USACO/C22.H01176",
+            "projectName": "USACO"
+        },
+        {
+            "type": "java",
+            "name": "Launch H261B",
+            "request": "launch",
+            "mainClass": "USACO/C22.H261B",
+            "projectName": "USACO"
+        },
+        {
+            "type": "java",
+            "name": "Launch H261C",
+            "request": "launch",
+            "mainClass": "USACO/C22.H261C",
+            "projectName": "USACO"
+        },
+        {
+            "type": "java",
+            "name": "Launch H252A",
+            "request": "launch",
+            "mainClass": "USACO/C23.H252A",
+            "projectName": "USACO"
+        },
+        {
+            "type": "java",
+            "name": "Launch H252A(1)",
+            "request": "launch",
+            "mainClass": "USACO/C24.H252A",
+            "projectName": "USACO"
+        },
+        {
+            "type": "java",
+            "name": "Launch H252B",
+            "request": "launch",
+            "mainClass": "USACO/C24.H252B",
+            "projectName": "USACO"
+        },
+        {
+            "type": "java",
+            "name": "Launch H00699",
+            "request": "launch",
+            "mainClass": "USACO/C25.H00699",
+            "projectName": "USACO"
+        },
+        {
+            "type": "java",
+            "name": "Launch H01187",
+            "request": "launch",
+            "mainClass": "USACO/C25.H01187",
+            "projectName": "USACO"
+        },
+        {
+            "type": "java",
+            "name": "Launch H252C",
+            "request": "launch",
+            "mainClass": "USACO/C25.H252C",
+            "projectName": "USACO"
+        },
+        {
+            "type": "java",
+            "name": "Launch H01122",
+            "request": "launch",
+            "mainClass": "USACO/C26.H01122",
+            "projectName": "USACO"
+        },
+        {
+            "type": "java",
+            "name": "Launch H264A",
+            "request": "launch",
+            "mainClass": "USACO/C26.H264A",
+            "projectName": "USACO"
+        },
+        {
+            "type": "java",
+            "name": "Launch H264B",
+            "request": "launch",
+            "mainClass": "USACO/C26.H264B",
+            "projectName": "USACO"
+        },
+        {
+            "type": "java",
+            "name": "Launch H264C",
+            "request": "launch",
+            "mainClass": "USACO/C26.H264C",
+            "projectName": "USACO"
+        },
+        {
+            "type": "java",
+            "name": "Launch H264D",
+            "request": "launch",
+            "mainClass": "USACO/C26.H264D",
+            "projectName": "USACO"
+        },
+        {
+            "type": "java",
+            "name": "Launch H268A",
+            "request": "launch",
+            "mainClass": "USACO/C26.H268A",
+            "projectName": "USACO"
+        },
+        {
+            "type": "java",
+            "name": "Launch H268B",
+            "request": "launch",
+            "mainClass": "USACO/C26.H268B",
+            "projectName": "USACO"
+        },
+        {
+            "type": "java",
+            "name": "Launch H268C",
+            "request": "launch",
+            "mainClass": "USACO/C26.H268C",
+            "projectName": "USACO"
+        },
+        {
+            "type": "java",
+            "name": "Launch H01229",
+            "request": "launch",
+            "mainClass": "USACO/C27.H01229",
+            "projectName": "USACO"
+        },
+        {
+            "type": "java",
+            "name": "Launch H01231",
+            "request": "launch",
+            "mainClass": "USACO/C27.H01231",
+            "projectName": "USACO"
+        },
+        {
+            "type": "java",
+            "name": "Launch H01232",
+            "request": "launch",
+            "mainClass": "USACO/C28.H01232",
+            "projectName": "USACO"
+        },
+        {
+            "type": "java",
+            "name": "Launch H01265",
+            "request": "launch",
+            "mainClass": "USACO/C29.H01265",
+            "projectName": "USACO"
+        },
+        {
+            "type": "java",
+            "name": "Launch H00749",
+            "request": "launch",
+            "mainClass": "USACO/C3.H00749",
+            "projectName": "USACO"
+        },
+        {
+            "type": "java",
+            "name": "Launch H00750",
+            "request": "launch",
+            "mainClass": "USACO/C3.H00750",
+            "projectName": "USACO"
+        },
+        {
+            "type": "java",
+            "name": "Launch H01264",
+            "request": "launch",
+            "mainClass": "USACO/C30.H01264",
+            "projectName": "USACO"
+        },
+        {
+            "type": "java",
+            "name": "Launch H473",
+            "request": "launch",
+            "mainClass": "USACO/C4.H473",
+            "projectName": "USACO"
+        },
+        {
+            "type": "java",
+            "name": "Launch H01003",
+            "request": "launch",
+            "mainClass": "USACO/C5.H01003",
+            "projectName": "USACO"
+        },
+        {
+            "type": "java",
+            "name": "Launch H01097",
+            "request": "launch",
+            "mainClass": "USACO/C5.H01097",
+            "projectName": "USACO"
+        },
+        {
+            "type": "java",
+            "name": "Launch H473(1)",
+            "request": "launch",
+            "mainClass": "USACO/C5.H473",
+            "projectName": "USACO"
+        },
+        {
+            "type": "java",
+            "name": "Launch H01137",
+            "request": "launch",
+            "mainClass": "USACO/C6.H01137",
+            "projectName": "USACO"
+        },
+        {
+            "type": "java",
+            "name": "Launch H01152",
+            "request": "launch",
+            "mainClass": "USACO/C6.H01152",
+            "projectName": "USACO"
+        },
+        {
+            "type": "java",
+            "name": "Launch H00124",
+            "request": "launch",
+            "mainClass": "USACO/C7.H00124",
+            "projectName": "USACO"
+        },
+        {
+            "type": "java",
+            "name": "Launch H00210",
+            "request": "launch",
+            "mainClass": "USACO/C7.H00210",
+            "projectName": "USACO"
+        },
+        {
+            "type": "java",
+            "name": "Launch H00881",
+            "request": "launch",
+            "mainClass": "USACO/C7.H00881",
+            "projectName": "USACO"
+        },
+        {
+            "type": "java",
+            "name": "Launch H01086",
+            "request": "launch",
+            "mainClass": "USACO/C8.H01086",
+            "projectName": "USACO"
+        },
+        {
+            "type": "java",
+            "name": "Launch H01098",
+            "request": "launch",
+            "mainClass": "USACO/C8.H01098",
+            "projectName": "USACO"
+        },
+        {
+            "type": "java",
+            "name": "Launch H01067",
+            "request": "launch",
+            "mainClass": "USACO/C9.H01067",
+            "projectName": "USACO"
+        },
+        {
+            "type": "java",
+            "name": "Launch B1",
+            "request": "launch",
+            "mainClass": "USACO/FirstContest.B1",
+            "projectName": "USACO"
+        },
+        {
+            "type": "java",
+            "name": "Launch B2",
+            "request": "launch",
+            "mainClass": "USACO/FirstContest.B2",
+            "projectName": "USACO"
+        },
+        {
+            "type": "java",
+            "name": "Launch B3",
+            "request": "launch",
+            "mainClass": "USACO/FirstContest.B3",
+            "projectName": "USACO"
+        },
+        {
+            "type": "java",
+            "name": "Launch S1",
+            "request": "launch",
+            "mainClass": "USACO/FirstContest.S1",
+            "projectName": "USACO"
+        },
+        {
+            "type": "java",
+            "name": "Launch S11",
+            "request": "launch",
+            "mainClass": "USACO/FirstContest.S11",
+            "projectName": "USACO"
+        },
+        {
+            "type": "java",
+            "name": "Launch S2",
+            "request": "launch",
+            "mainClass": "USACO/FirstContest.S2",
+            "projectName": "USACO"
+        },
+        {
+            "type": "java",
+            "name": "Launch S3",
+            "request": "launch",
+            "mainClass": "USACO/FirstContest.S3",
+            "projectName": "USACO"
+        },
+        {
+            "type": "java",
+            "name": "Launch S1(1)",
+            "request": "launch",
+            "mainClass": "USACO/SecondContest.S1",
+            "projectName": "USACO"
+        },
+        {
+            "type": "java",
+            "name": "Launch S1a",
+            "request": "launch",
+            "mainClass": "USACO/SecondContest.S1a",
+            "projectName": "USACO"
+        },
+        {
+            "type": "java",
+            "name": "Launch S2(1)",
+            "request": "launch",
+            "mainClass": "USACO/SecondContest.S2",
+            "projectName": "USACO"
+        },
+        {
+            "type": "java",
+            "name": "Launch S3(1)",
+            "request": "launch",
+            "mainClass": "USACO/SecondContest.S3",
+            "projectName": "USACO"
+        }
+    ]
+}
