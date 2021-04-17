@@ -25,7 +25,7 @@ public class H01222 {
 
         for (int i = 0; i < N; i++) {// y value
             for (int j = 0; j < N; j++) {// x value
-                route[i][j] = 1000;
+                route[i][j] = Integer.MAX_VALUE;
             }
         }
         for (int i = 0; i < M; i++) {
@@ -50,22 +50,16 @@ public class H01222 {
         printArr(route);
         boolean[] note = new boolean[N];
         note[0] = true;
-        S = new int[N];
+        S = route[0];
         for (int t = 0; t < N; t++) {
-            int tempi = 0;
-            int temps = Integer.MAX_VALUE;
-            for (int i = 0; i < N; i++) {// find non zero value
-                if (note[i]) {
-                    // i is the starter
-                    for (int j = 0; j < N; j++) {// possible reach
-                        if (route[i][j] + S[i] < temps && !note[j]) {
-                            tempi = j;
-                            temps = route[j][j] + S[i];
-                        }
-                    }
+            int smallestnode=0;
+            int smallestsize=Integer.MAX_VALUE;
+            for(int j=0;j<N;j++){
+                if(!note[j]&&S[j]<smallestsize){
+                    smallestnode=j;
+                    smallestnode=sma
                 }
             }
-            S[tempi] = temps;
         }
         for (int i = 0; i < N; i++) {
             System.out.println(S[i]);
