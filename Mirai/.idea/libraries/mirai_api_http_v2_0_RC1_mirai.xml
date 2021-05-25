@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="mirai-api-http-v2.0-RC1.mirai">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/mirai-api-http-v2.0-RC1.mirai.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

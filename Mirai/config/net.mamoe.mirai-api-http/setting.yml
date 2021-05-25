@@ -1,0 +1,7 @@
+adapters: 
+  - http
+enableVerify: true
+verifyKey: INITKEYEtJTmb5i
+singleMode: false
+cacheSize: 4096
+adapterSettings: {}
