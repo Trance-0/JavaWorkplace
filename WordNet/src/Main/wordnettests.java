@@ -2,8 +2,6 @@ package Main;
 
 import edu.princeton.cs.algs4.Digraph;
 
-import java.util.HashMap;
-
 public class wordnettests {
         private Digraph graph;
         private int size;

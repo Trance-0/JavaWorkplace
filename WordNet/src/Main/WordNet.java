@@ -1,14 +1,15 @@
-package Main;
+//package Main;
 
 import java.util.HashMap;
 
 public class WordNet {
 	private final int[] ancestor;
 	private final int size;
-	private final HashMap<String,Integer> wordmap=new HashMap<String,Integer>();
+	private final HashMap<String,Integer> wordmap;
 	private final String[] orimap;
 // constructor takes the name of the two input files
 public WordNet(String synsets, String hypernyms) {
+	wordmap=new HashMap<>();
 	if(synsets==null||hypernyms==null) {
 		throw new IllegalArgumentException();
 	}
