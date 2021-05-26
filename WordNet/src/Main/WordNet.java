@@ -17,7 +17,7 @@ public WordNet(String synsets, String hypernyms) {
 	size=temp.length;
 	orimap=new String[size];
 	for(int i=0;i<size;i++) {
-		String trim=temp[i].substring(temp[i].indexOf(" "), temp[i].indexOf(",", temp[i].indexOf(",")));
+		String trim=temp[i].substring(temp[i].indexOf(' '), temp[i].indexOf(',', temp[i].indexOf(",")));
 		wordmap.put(trim, i);
 		orimap[i]=trim;
 	}

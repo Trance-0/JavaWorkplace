@@ -22,7 +22,7 @@ public class SAP {
 			}
 			note++;
 			v=Integer.parseInt(graph.adj(v).toString());
-			v=Integer.parseInt(graph.adj(v).toString());
+			w=Integer.parseInt(graph.adj(w).toString());
 		}
 		return -1;
 	}
@@ -42,7 +42,7 @@ public class SAP {
 				checked[w]=true;
 			}
 			v=Integer.parseInt(graph.adj(v).toString());
-			v=Integer.parseInt(graph.adj(v).toString());
+			w=Integer.parseInt(graph.adj(w).toString());
 		}
 		return -1;
 	}
