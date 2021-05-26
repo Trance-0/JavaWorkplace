@@ -1,0 +1,47 @@
+[0m2021-05-26 09:03:28 V/Net 3149920162: No BdhSession cache[0m
+[0m2021-05-26 09:03:28 V/Net 3149920162: No server list cached.[0m
+[92m2021-05-26 09:03:28 I/Net 3149920162: Connected to server 183.3.235.162:14000[0m
+[0m2021-05-26 09:03:28 V/Net 3149920162: Send: wtlogin.login[0m
+[0m2021-05-26 09:03:28 V/Net 3149920162: Recv: LoginPacketResponse.Captcha.Slider[0m
+[92m2021-05-26 09:03:28 I/Net 3149920162: Connected to server 183.3.235.162:14000[0m
+[0m2021-05-26 09:03:28 V/Net 3149920162: Send: wtlogin.login[0m
+[0m2021-05-26 09:03:28 V/Net 3149920162: Recv: LoginPacketResponse.Captcha.Slider[0m
+[0m2021-05-26 09:05:40 V/Net 3149920162: No BdhSession cache[0m
+[0m2021-05-26 09:05:40 V/Net 3149920162: No server list cached.[0m
+[92m2021-05-26 09:05:40 I/Net 3149920162: Connected to server 183.3.235.162:14000[0m
+[0m2021-05-26 09:05:40 V/Net 3149920162: Send: wtlogin.login[0m
+[0m2021-05-26 09:05:40 V/Net 3149920162: Recv: LoginPacketResponse.Captcha.Slider[0m
+[92m2021-05-26 09:05:40 I/Net 3149920162: Connected to server 183.3.235.162:14000[0m
+[0m2021-05-26 09:05:40 V/Net 3149920162: Send: wtlogin.login[0m
+[0m2021-05-26 09:05:40 V/Net 3149920162: Recv: LoginPacketResponse.Captcha.Slider[0m
+[0m2021-05-26 09:06:31 V/Net 3149920162: No BdhSession cache[0m
+[0m2021-05-26 09:06:31 V/Net 3149920162: No server list cached.[0m
+[92m2021-05-26 09:06:31 I/Net 3149920162: Connected to server 113.96.12.224:8080[0m
+[0m2021-05-26 09:06:31 V/Net 3149920162: Send: wtlogin.login[0m
+[0m2021-05-26 09:06:32 V/Net 3149920162: Recv: LoginPacketResponse.Captcha.Slider[0m
+[92m2021-05-26 09:07:38 I/Net 3149920162: Connected to server 113.96.12.224:8080[0m
+[0m2021-05-26 09:07:38 V/Net 3149920162: Send: wtlogin.login[0m
+[0m2021-05-26 09:07:38 V/Net 3149920162: Recv: LoginPacketResponse.Captcha.Slider[0m
+[92m2021-05-26 09:10:34 I/Net 3149920162: Connected to server 113.96.12.224:8080[0m
+[0m2021-05-26 09:10:34 V/Net 3149920162: Send: wtlogin.login[0m
+[0m2021-05-26 09:10:34 V/Net 3149920162: Recv: LoginPacketResponse.Captcha.Slider[0m
+[0m2021-05-26 09:11:34 V/Net 3149920162: Send: wtlogin.login[0m
+[0m2021-05-26 09:11:34 V/Net 3149920162: Recv: Error(bot=Bot(3149920162), code=237, title=禁止登录, message=当前上网环境异常，请更换网络环境或在常用设备上登录或稍后再试。, errorInfo=)[0m
+[0m2021-05-26 09:12:17 V/Net 3149920162: No BdhSession cache[0m
+[0m2021-05-26 09:12:17 V/Net 3149920162: No server list cached.[0m
+[92m2021-05-26 09:12:17 I/Net 3149920162: Connected to server 120.232.18.27:443[0m
+[0m2021-05-26 09:12:17 V/Net 3149920162: Send: wtlogin.login[0m
+[0m2021-05-26 09:12:17 V/Net 3149920162: Recv: LoginPacketResponse.Captcha.Slider[0m
+[0m2021-05-26 09:12:36 V/Net 3149920162: Send: wtlogin.login[0m
+[0m2021-05-26 09:12:36 V/Net 3149920162: Recv: Error(bot=Bot(3149920162), code=237, title=禁止登录, message=当前上网环境异常，请更换网络环境或在常用设备上登录或稍后再试。, errorInfo=)[0m
+[0m2021-05-26 09:12:36 V/Net 3149920162: Channel closed.[0m
+[0m2021-05-26 09:13:05 V/Net 3149920162: No BdhSession cache[0m
+[0m2021-05-26 09:13:05 V/Net 3149920162: No server list cached.[0m
+[92m2021-05-26 09:13:05 I/Net 3149920162: Connected to server msfwifi.3g.qq.com:8080[0m
+[0m2021-05-26 09:13:05 V/Net 3149920162: Send: wtlogin.login[0m
+[0m2021-05-26 09:13:06 V/Net 3149920162: Recv: LoginPacketResponse.Captcha.Slider[0m
+[92m2021-05-26 09:15:22 I/Net 3149920162: Connected to server msfwifi.3g.qq.com:8080[0m
+[0m2021-05-26 09:15:22 V/Net 3149920162: Send: wtlogin.login[0m
+[0m2021-05-26 09:15:22 V/Net 3149920162: Recv: LoginPacketResponse.Captcha.Slider[0m
+[0m2021-05-26 09:15:40 V/Net 3149920162: Send: wtlogin.login[0m
+[0m2021-05-26 09:15:41 V/Net 3149920162: Recv: Error(bot=Bot(3149920162), code=237, title=禁止登录, message=当前上网环境异常，请更换网络环境或在常用设备上登录或稍后再试。, errorInfo=)[0m
