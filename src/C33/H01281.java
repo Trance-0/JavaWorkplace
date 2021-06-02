@@ -29,6 +29,7 @@ public class H01281 {
             st = new StringTokenizer(br.readLine());
             cowPos[i] = Integer.parseInt(st.nextToken()) - 1;
         }
+        System.out.println(printarr(cowPos));
         E = new int[V][V];
         for (int i = 0; i < V; i++) {
             for (int j = 0; j < V; j++) {
@@ -59,13 +60,15 @@ public class H01281 {
                 }
             }
         }
+        System.out.println(printarr(E));
         int sweetspot = Integer.MAX_VALUE;
         for (int i[] : E) {
             int temp = 0;
             for (int j : cowPos) {
                 temp += i[j];
             }
-            if (temp < sweetspot) {
+            System.out.println(i+" : "+temp);
+            if (temp < sweetspot&&temp>0) {
                 sweetspot = temp;
             }
         }
@@ -86,6 +89,14 @@ public class H01281 {
         return sb.toString();
     }
 
+    public String printarr(int[] arr) {
+        StringBuilder sb = new StringBuilder();
+        for (int i : arr) {
+            sb.append(i);
+            sb.append(" ");
+        }
+        return sb.toString();
+    }
     public static void main(String[] args) throws IOException {
         H01281 a = new H01281();
     }
