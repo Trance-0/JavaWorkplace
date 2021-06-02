@@ -1,4 +1,4 @@
-//package Main;
+package Main;
 
 public class Outcast {
     private WordNet wn;

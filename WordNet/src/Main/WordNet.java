@@ -1,4 +1,4 @@
-//package Main;
+package Main;
 
 import java.util.HashMap;
 
@@ -13,7 +13,7 @@ public WordNet(String synsets, String hypernyms) {
 	if(synsets==null||hypernyms==null) {
 		throw new IllegalArgumentException();
 	}
-	String[] temp=synsets.split("/n");
+	String[] temp=synsets.split("\n");
 	size=temp.length;
 	orimap=new String[size];
 	for(int i=0;i<size;i++) {
