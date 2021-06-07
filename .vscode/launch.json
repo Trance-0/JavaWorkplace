@@ -9,6 +9,13 @@
             "name": "Launch H01281",
             "request": "launch",
             "mainClass": "USACO/C33.H01281",
+            "projectName": "master"
+        },
+        {
+            "type": "java",
+            "name": "Launch H01281",
+            "request": "launch",
+            "mainClass": "USACO/C33.H01281",
             "projectName": "USACO"
         },
         {

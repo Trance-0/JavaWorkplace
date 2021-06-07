@@ -1,4 +1,4 @@
-package C33;
+package C34;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -49,16 +49,10 @@ public class H01281 {
                 E[to][from] = weight;
             }
         }
-        // I love floy-warshall
-        for (int i = 0; i < V; i++) {// the middle point
-            for (int j = 0; j < V; j++) {
-                for (int k = 0; k < V; k++) {
-                    if (E[j][k] > E[j][i] + E[i][k] && E[j][i] + E[i][k] > 0) {
-                        E[j][k] = E[j][i] + E[i][k];
-                        E[k][j] = E[j][i] + E[i][k];
-                    }
-                }
-            }
+        // use bellman algorithm(dynamic programming to get the minimum value to each
+        // node so that you can calculate the shortest one)
+        for (int i = 0; i < V; i++) {// the point to get minimum path (log n)
+            // to be implement
         }
         // System.out.println(printarr(E));
         int sweetspot = Integer.MAX_VALUE;
