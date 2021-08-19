@@ -110,14 +110,17 @@ public class H01278 {
         queue.add(0);
         ischecked[0] = true;
         forward[0] = price[0];
+        for (int i = 1; i < V; i++) {
+            forward[i] = 1000;
+        }
         while (!queue.isEmpty()) {
             int checking = queue.pollFirst();
             ischecked[checking] = false;
             LinkedList<int[]> tocheck = fs.get(checking);
             System.out.println("checking: "+checking);
             for (int[] i : tocheck) {
-                if (forward[checking] < forward[i[1]]) {
-                    forward[i[1]] = forward[checking];
+                if (forward[checking] < forward[i[1]] || forward[i[1]] > price[i[1]]) {
+                    forward[i[1]] = Math.min(forward[checking],price[i[1]]);
                     if(!ischecked[i[1]]){
                     ischecked[i[1]] = true;
                     queue.addLast(i[1]);
@@ -130,15 +133,15 @@ public class H01278 {
         ischecked = new boolean[V];
         queue.add(V-1);
         ischecked[V-1] = true;
-        forward[V-1] = price[V-1];
+        backward[V-1] = price[V-1];
         while (!queue.isEmpty()) {
             int checking = queue.pollFirst();
             ischecked[checking] = false;
             LinkedList<int[]> tocheck = bs.get(checking);
             System.out.println("checking: "+checking);
             for (int[] i : tocheck) {
-                if (backward[checking] > backward[i[1]]) {
-                    backward[i[1]] = backward[checking];
+                if (backward[checking] > backward[i[1]] || backward[i[1]] < price[i[1]]) {
+                    backward[i[1]] =Math.max(backward[checking],price[i[1]]);
                     if(!ischecked[i[1]]){
                     ischecked[i[1]] = true;
                     queue.addLast(i[1]);
