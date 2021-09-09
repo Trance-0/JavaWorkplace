@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.util.LinkedList;
 import java.util.StringTokenizer;
 import java.io.InputStreamReader;
-public class H01292 {
+public class H01295 {
     public class ForwardStar {
         public class edge {
             private int to, weight, nexthead;
@@ -61,21 +61,30 @@ public class H01292 {
 public int[] SPFA(int inital, ForwardStar fs, int V) {
     int[] dis = new int[V];
     LinkedList<Integer> queue = new LinkedList<Integer>();
+    int[] checktime=new int[V];
     boolean[] ischecked = new boolean[V];
     queue.add(inital);
     ischecked[inital] = true;
     for (int j = 0; j < V; j++) {
-        dis[j] = Integer.MIN_VALUE;
+        dis[j] = Integer.MAX_VALUE;
     }
     dis[inital] = 0;
     while (!queue.isEmpty()) {
+        //printarr(dis);
         int checking = queue.pollFirst();
-       ischecked[checking] = false;
+        checktime[checking]+=1;
+        if(checktime[checking]>V){
+            for(int i=0;i<V;i++){
+                dis[i]=-1;
+            }
+            return dis;
+        }
+        ischecked[checking] = false;
         LinkedList<int[]> tocheck = fs.get(checking);
         // System.out.println("checking: " + checking);
         // System.out.println(dis);
         for (int[] i : tocheck) {
-            if ( dis[i[1]] < dis[checking]+ i[2]) {
+            if ( dis[i[1]] > dis[checking]+ i[2]) {
                 dis[i[1]] =dis[checking] + i[2];
                 if (!ischecked[i[1]]) {
                     ischecked[i[1]] = true;
@@ -88,45 +97,47 @@ public int[] SPFA(int inital, ForwardStar fs, int V) {
 }
 
 private int n;
-    public H01292()throws IOException{
+private int ml;
+private int md;
+    public H01295()throws IOException{
         BufferedReader br=new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st=new StringTokenizer(br.readLine());
         n=Integer.parseInt(st.nextToken());
+        ml=Integer.parseInt(st.nextToken());
+        md=Integer.parseInt(st.nextToken());
       
-        ForwardStar fs=new ForwardStar(50000, 100000);
-        int max=0;
-        int min=50000;
-        for(int i=0;i<n;i++){
+        ForwardStar fs=new ForwardStar(n, ml+md+2*n);
+
+        for(int i=0;i<ml;i++){
             st=new StringTokenizer(br.readLine());
             int a,b,c;
             a=Integer.parseInt(st.nextToken())-1;
-            b=Integer.parseInt(st.nextToken());
+            b=Integer.parseInt(st.nextToken())-1;
             c=Integer.parseInt(st.nextToken());
-            if(a<min){
-                min=a;
-            }
-            if(b>max){
-max=b;
-            }
-            fs.add(a, b, c);
+            fs.add(a,b, c);
         }
-        for(int i=min;i<max;i++){
-            fs.add(i, i+1, 0);
-            fs.add(i+1, i, -1);
+        for(int i=0;i<md;i++){
+            st=new StringTokenizer(br.readLine());
+            int a,b,c;
+            a=Integer.parseInt(st.nextToken())-1;
+            b=Integer.parseInt(st.nextToken())-1;
+            c=Integer.parseInt(st.nextToken());
+            fs.add(b,a,-c);
         }
-        int[] dis=SPFA(min, fs, max+1);
-printarr(dis);
+        // for(int i=0;i<n;i++){
+        //     fs.add(i, i+1, 0);
+        //     fs.add(i+1, i, -1);
+        // }
+        int[] dis=SPFA(0, fs, n);
+        if(dis[n-1]==Integer.MAX_VALUE){
+            System.out.println(-2);
+        }else{
+            System.out.println(dis[n-1]);
+        }
     }
 
-    public void printarr(int[] arr) {
-        StringBuilder sb = new StringBuilder();
-        for (int i : arr) {
-            sb.append(i);
-            sb.append(" ");
-        }
-        System.out.println(sb.toString());
-    }
+
     public static void main(String[] args) throws IOException {
-        H01292 a=new H01292();
+        H01295 a=new H01295();
     }
 }
