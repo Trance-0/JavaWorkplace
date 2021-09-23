@@ -6,6 +6,27 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Launch H01298",
+            "request": "launch",
+            "mainClass": "USACO/C44.H01298",
+            "projectName": "USACO"
+        },
+        {
+            "type": "java",
+            "name": "Launch H01296",
+            "request": "launch",
+            "mainClass": "USACO/C43.H01296",
+            "projectName": "USACO"
+        },
+        {
+            "type": "java",
+            "name": "Launch H01287",
+            "request": "launch",
+            "mainClass": "USACO/C42.H01287",
+            "projectName": "USACO"
+        },
+        {
+            "type": "java",
             "name": "Launch H01321",
             "request": "launch",
             "mainClass": "USACO/C42.H01321",
