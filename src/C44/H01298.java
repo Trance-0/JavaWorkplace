@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.LinkedList;
 import java.util.Stack;
 import java.util.StringTokenizer;
+
 import java.io.InputStreamReader;
 
 /*
@@ -16,7 +17,8 @@ public class H01298 {
     public class AdjacencyList {
         public class edge {
             private LinkedList<Integer> nearby;
-            public edge(){
+
+            public edge() {
                 nearby = new LinkedList<>();
             }
         }
@@ -25,6 +27,9 @@ public class H01298 {
 
         public AdjacencyList(int V) {
             edges = new edge[V];
+            for (int i = 0; i < V; i++) {
+                edges[i] = new edge();
+            }
         }
 
         public void add(int from, int to) {
@@ -48,53 +53,108 @@ public class H01298 {
 
     }
 
-    public void Tarjan(AdjacencyList E, int[] layer, int[] group, int start, Stack<Integer> order, int count) {
-        layer[start] = count;
-        group[start] = count;
-        count++;
-        LinkedList<Integer> tempEdge = E.get(start);
-        for (int to : tempEdge) {
-            if (layer[to] == -1) {
-                Tarjan(E, layer, group, to, order, count);
-                group[start] = Math.min(group[start], group[to]);
-            } else {
-                group[start] = Math.min(group[start], group[to]);
+    public void Tarjan(AdjacencyList E, int[] layer, int[] minAncestor, int[] group, int start, Stack<Integer> order,
+            boolean[] inStack, int groupCount, int currentLayer) {
+        layer[start] = currentLayer;
+        minAncestor[start] = currentLayer;
+        currentLayer++;
+        inStack[start] = true;
+        order.add(start);
+        for (int i : E.get(start)) {
+            // if can continue search (the next node is not searched before)
+            if (layer[i] == 0) {
+                Tarjan(E, layer, minAncestor, group, i, order, inStack, groupCount, currentLayer);
+                minAncestor[start] = Math.min(minAncestor[i], minAncestor[start]);
+            }
+            // if the node have beed searched before (the next node is in the stack)
+            else if (inStack[i]) {
+                minAncestor[start] = Math.min(minAncestor[start], layer[i]);
             }
         }
-        if (layer[start] == group[start]) {
-            order.add(start);
+            // if the node is a storongly connected
+            if (layer[start] == minAncestor[start]) {
+                while (order.peek() != start) {
+                    int temp = order.pop();
+                    inStack[temp] = false;
+                    group[temp] = groupCount;
+                }
+                order.pop();
+                inStack[start] = false;
+                group[start] = groupCount;
+                groupCount++;
         }
     }
 
     private int V;
     private AdjacencyList E;
     private Stack<Integer> order;
+    private int[] indegree;
 
     public H01298() throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(br.readLine());
         V = Integer.parseInt(st.nextToken());
         E = new AdjacencyList(V);
+        indegree = new int[V];
+        // problem A
         for (int i = 0; i < V; i++) {
             st = new StringTokenizer(br.readLine());
-            int temp = Integer.parseInt(st.nextToken())-1;
-            while (temp != 0) {
+            int temp = Integer.parseInt(st.nextToken()) - 1;
+            while (temp != -1) {
                 E.add(i, temp);
-                temp = Integer.parseInt(st.nextToken())-1;
+                indegree[temp]++;
+                temp = Integer.parseInt(st.nextToken()) - 1;
             }
         }
-        int[] layer = new int[V];
+        int indegreeZeroCount = 0;
         for (int i = 0; i < V; i++) {
-            layer[i] = -1;
+            if (indegree[i] == 0) {
+                indegreeZeroCount++;
+            }
         }
+        if (indegreeZeroCount == 0) {
+            System.out.println(1);
+        } else {
+            System.out.println(indegreeZeroCount);
+        }
+        // problem B
+        order = new Stack<Integer>();
+        int[] layer = new int[V];
         int[] group = new int[V];
+        int[] minAncestor=new int[V];
+        boolean[]inStack=new boolean[V];
         int count = 0;
         for (int i = 0; i < V; i++) {
-            if (layer[i] == -1) {
-                Tarjan(E, layer, group, i, order, count);
+                Tarjan(E, layer,minAncestor, group, i, order,inStack, count,1);
+        }
+        int maxCount = 0;
+        for (int i : group) {
+            maxCount = Math.max(i, maxCount);
+        }
+        maxCount++;
+        int[] indegree = new int[maxCount];
+        int[] outdegree = new int[maxCount];
+        printarr(group);
+        for (int i = 0; i < V; i++) {
+            LinkedList<Integer> temp = E.get(i);
+            outdegree[group[i]] = temp.size();
+            for (int j : temp) {
+                indegree[group[j]]++;
             }
         }
-        printarr(group);
+        indegreeZeroCount = 0;
+        int outdegreeZeroCount = 0;
+        for (int i : indegree) {
+            if (i == 0) {
+                indegreeZeroCount++;
+            }
+        }
+        for (int i : outdegree) {
+            if (i == 0) {
+                outdegreeZeroCount++;
+            }
+        }
+        System.out.println(Math.max(indegreeZeroCount, outdegreeZeroCount));
     }
 
     public void printarr(int[] arr) {
