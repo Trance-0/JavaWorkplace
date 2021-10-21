@@ -52,9 +52,17 @@ public class H01298 {
         }
 
     }
-
-    public void Tarjan(AdjacencyList E, int[] layer, int[] minAncestor, int[] group, int start, Stack<Integer> order,
-            boolean[] inStack, int groupCount, int currentLayer) {
+    
+    //this method is proven to be usable.
+    //Global variable required for Tarjan method.
+    private int[] group;
+private int[] layer;
+private int[] minAncestor;
+private boolean[] inStack;
+private Stack<Integer> order;
+private int currentLayer;
+private int groupCount;
+    public void Tarjan(AdjacencyList E ,  int start ) {
         layer[start] = currentLayer;
         minAncestor[start] = currentLayer;
         currentLayer++;
@@ -63,7 +71,7 @@ public class H01298 {
         for (int i : E.get(start)) {
             // if can continue search (the next node is not searched before)
             if (layer[i] == 0) {
-                Tarjan(E, layer, minAncestor, group, i, order, inStack, groupCount, currentLayer);
+                Tarjan(E,i);
                 minAncestor[start] = Math.min(minAncestor[i], minAncestor[start]);
             }
             // if the node have beed searched before (the next node is in the stack)
@@ -87,7 +95,6 @@ public class H01298 {
 
     private int V;
     private AdjacencyList E;
-    private Stack<Integer> order;
     private int[] indegree;
 
     public H01298() throws IOException {
@@ -119,13 +126,16 @@ public class H01298 {
         }
         // problem B
         order = new Stack<Integer>();
-        int[] layer = new int[V];
-        int[] group = new int[V];
-        int[] minAncestor=new int[V];
-        boolean[]inStack=new boolean[V];
-        int count = 0;
+         layer = new int[V];
+         group = new int[V];
+         minAncestor=new int[V];
+        inStack=new boolean[V];
+        groupCount = 0;
+        currentLayer=0;
         for (int i = 0; i < V; i++) {
-                Tarjan(E, layer,minAncestor, group, i, order,inStack, count,1);
+            if(minAncestor[i]==0){
+                Tarjan(E,i);
+            }
         }
         int maxCount = 0;
         for (int i : group) {
@@ -137,8 +147,11 @@ public class H01298 {
         printarr(group);
         for (int i = 0; i < V; i++) {
             LinkedList<Integer> temp = E.get(i);
-            outdegree[group[i]] = temp.size();
             for (int j : temp) {
+                if(group[i]==group[j]){
+continue;
+                }
+                outdegree[group[i]]++;
                 indegree[group[j]]++;
             }
         }
