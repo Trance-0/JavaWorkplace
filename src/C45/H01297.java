@@ -126,8 +126,6 @@ public class H01297 {
         return new LinkedList<Integer>();
     }
 
-
-
     private ForwardStar G;
     private ForwardStar Gt;
     private ForwardStar Ga;
@@ -150,43 +148,78 @@ public class H01297 {
         rawE = new int[E][2];
         for (int i = 0; i < E; i++) {
             st = new StringTokenizer(br.readLine());
-            rawE[i][0] = Integer.parseInt(st.nextToken())-1;
-            rawE[i][1] = Integer.parseInt(st.nextToken())-1;
+            rawE[i][0] = Integer.parseInt(st.nextToken()) - 1;
+            rawE[i][1] = Integer.parseInt(st.nextToken()) - 1;
             G.add(rawE[i][0], rawE[i][1]);
             Gt.add(rawE[i][1], rawE[i][0]);
         }
         // find out all storng connected componet and view them as a signle node.
-        // the final goal is (i) to find the chain with highest weight.(ii) to find the number of chains with highest weight.
+        // the final goal is (i) to find the chain with highest weight.(ii) to find the
+        // number of chains with highest weight.
         KosarajuModified(G, Gt, V);
-        int[] inDegree=new int[count];
-        int[] power = ColorCount(group, count);
+        int[] inDegree = new int[count];
+        int[] chainSize = ColorCount(group, count);
         for (int[] i : rawE) {
-            //to eliminate mono color connection
+            // to eliminate mono color connection
             if (group[i[0]] == group[i[1]]) {
                 continue;
             }
-            //Topological sort BFS need indegree to process.
-            inDegree[i[1]]++;
+            // Topological sort BFS need indegree to process.
+            inDegree[group[i[1]]]++;
             Ga.add(group[i[0]], group[i[1]]);
+            // the node in the graph represent the color of the node.
         }
-       LinkedList<Integer>order=topologicalSortBFS(Ga, inDegree, V);
-       //use Dynamic processing by order made in topological sort.
-       for(int i:order){
-           //traverse all the node where node i can go.
-        LinkedList<int[]>tempEdge=Ga.get(i);
-        //multi adding check
-        boolean[]hasAdd=new boolean[count];
-        for(int[]j:tempEdge){
-            if(!hasAdd[j[1]]){
-hasAdd[j[1]]=true;
-                power[j[1]]+=power[j[0]];
+        // printarr(group);
+        LinkedList<Integer> order = topologicalSortBFS(Ga, inDegree, count);
+        // use Dynamic processing by order made in topological sort.
+        int[] accumulateChainSize = chainSize.clone();
+        // longest branch update count represent the numder of update when proceessing
+        // the array in order. Don't change if you don't know the funciton of it.
+        int[] longestChainUpdateCount = new int[count];
+        long largestChainSizeCount = 0;
+        for (int i = 0; i < count; i++) {
+            longestChainUpdateCount[i] = 1;
+        }
+        int longestChainSize = 0;
+        for (int i : order) {
+            // System.out.println(i);
+            // traverse all the node where node i can go.
+            LinkedList<int[]> tempEdge = Ga.get(i);
+            for (int[] j : tempEdge) {
+                // j is the edge, cosist of group of the node
+                int from = i;
+                int to = j[1];
+                if (accumulateChainSize[to] < accumulateChainSize[from] + chainSize[to]) {
+                    accumulateChainSize[to] = accumulateChainSize[from] + chainSize[to];
+                    // System.out.println(String.format( "Updating "+to+"" +from));
+                    // System.out.println("recount"+to);
+                    longestChainUpdateCount[to] = 0;
+                    longestChainUpdateCount[to] = longestChainUpdateCount[to] + longestChainUpdateCount[from];
+                    // find largeest value
+                } else if (accumulateChainSize[to] == accumulateChainSize[from] + chainSize[to]) {
+                    // System.out.println(String.format( "Updating "+to+"" +from));
+                    longestChainUpdateCount[to] = longestChainUpdateCount[to] + longestChainUpdateCount[from];
+                    // find largeest value
+               
+                }
+            }
+            if (accumulateChainSize[i] >= longestChainSize) {
+                longestChainSize = accumulateChainSize[i];
             }
         }
-       }
-        printarr(power);
+        for (int i = 0; i < count; i++) {
+            if (accumulateChainSize[i] == longestChainSize) {
+                largestChainSizeCount = (longestChainUpdateCount[i] + largestChainSizeCount) % X;
+            }
+        }
+        printarr(chainSize);
+         printarr(accumulateChainSize);
+         printarr(longestChainUpdateCount);
+        System.out.println(longestChainSize);
+        System.out.println(largestChainSizeCount);
     }
 
-    //to count the weight of each color.
+    // to count the weight of each color.
     private int[] ColorCount(int[] g, int c) {
         int[] result = new int[c];
         for (int i : g) {
@@ -206,6 +239,6 @@ hasAdd[j[1]]=true;
     }
 
     public static void main(String[] args) throws IOException {
-H01297 a=new H01297();
+        H01297 a = new H01297();
     }
 }

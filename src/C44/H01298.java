@@ -149,7 +149,7 @@ private int groupCount;
             LinkedList<Integer> temp = E.get(i);
             for (int j : temp) {
                 if(group[i]==group[j]){
-continue;
+                    continue;
                 }
                 outdegree[group[i]]++;
                 indegree[group[j]]++;
