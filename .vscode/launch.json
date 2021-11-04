@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Launch H01305",
+            "request": "launch",
+            "mainClass": "USACO/C46.H01305",
+            "projectName": "USACO"
+        },
+        {
+            "type": "java",
             "name": "Launch H01297",
             "request": "launch",
             "mainClass": "USACO/C45.H01297",

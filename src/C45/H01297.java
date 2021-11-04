@@ -196,7 +196,8 @@ public class H01297 {
                     longestChainUpdateCount[to] = 0;
                     longestChainUpdateCount[to] = longestChainUpdateCount[to] + longestChainUpdateCount[from];
                     // find largeest value
-                } else if (accumulateChainSize[to] == accumulateChainSize[from] + chainSize[to]) {
+                } 
+                if (accumulateChainSize[to] == accumulateChainSize[from] + chainSize[to]) {
                     // System.out.println(String.format( "Updating "+to+"" +from));
                     longestChainUpdateCount[to] = longestChainUpdateCount[to] + longestChainUpdateCount[from];
                     // find largeest value

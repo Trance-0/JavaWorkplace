@@ -55,13 +55,16 @@ public class H01298 {
     
     //this method is proven to be usable.
     //Global variable required for Tarjan method.
+    //Tarjan for strong conncected componet
     private int[] group;
-private int[] layer;
-private int[] minAncestor;
-private boolean[] inStack;
-private Stack<Integer> order;
-private int currentLayer;
-private int groupCount;
+    private Stack<Integer> order;
+    private int currentLayer=0;
+    private int groupCount=0;
+    //remember to initalize these variables below with proper size when use Tarjan algorithm!
+    private int[] layer;
+    private int[] minAncestor;
+    private boolean[] inStack;
+
     public void Tarjan(AdjacencyList E ,  int start ) {
         layer[start] = currentLayer;
         minAncestor[start] = currentLayer;
