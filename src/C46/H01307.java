@@ -48,10 +48,8 @@ public class H01307 {
     }
 
     // Tarjan to get bridge
-    private int[] group;
     private Stack<Integer> order=new Stack<Integer>();
     private int currentLayer=0;
-    private int groupCount=0;
     private LinkedList<int[]>bridges=new LinkedList<int[]>();
     //remember to initalize these variables below with proper size when use Tarjan algorithm!
     private int[] layer;
@@ -101,13 +99,14 @@ public class H01307 {
              map.add(startpoint, endpoint);
             map.add(endpoint, startpoint);
         }
+        st = new StringTokenizer(br.readLine());
         layer = new int[N];
         minAncestor = new int[N];
         inStack = new boolean[N];
         Tarjan(map, 0);
-        printarr(layer);
-        printarr(minAncestor);
-        System.out.println(bridges.size());
+        //printarr(layer);
+        //printarr(minAncestor);
+        //System.out.println(bridges.size());
         System.out.println(E-bridges.size());
     }
     public void printarr(int[] arr) {
