@@ -67,14 +67,15 @@ public class H01307 {
             if (layer[i] == 0) {
                 Tarjan(E,i);
                 minAncestor[start] = Math.min(minAncestor[i], minAncestor[start]);
+                if(minAncestor[i] > layer[start]){
+                    bridges.add(new int[]{start,i});
+                }
             }
             // if the node have beed searched before (the next node is in the stack)
             else if (inStack[i]) {
                 minAncestor[start] = Math.min(minAncestor[start], layer[i]);
             }
-            if(minAncestor[i] > layer[start]){
-                  bridges.add(new int[]{start,i});
-            }
+           
         }
     }
 
