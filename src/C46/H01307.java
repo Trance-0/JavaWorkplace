@@ -4,7 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.LinkedList;
-import java.util.Stack;
+import java.util.List;
 import java.util.StringTokenizer;
 
 public class H01307 {
@@ -48,37 +48,47 @@ public class H01307 {
     }
 
     // Tarjan to get bridge
-    private Stack<Integer> order=new Stack<Integer>();
     private int currentLayer=0;
-    private LinkedList<int[]>bridges=new LinkedList<int[]>();
+    private List<List<Integer>>bridges=new LinkedList<List<Integer>>();
     //remember to initalize these variables below with proper size when use Tarjan algorithm!
     private int[] layer;
     private int[] minAncestor;
     private boolean[] inStack;
 
-    public void Tarjan(AdjacencyList E ,  int start ) {
+    public void Tarjan(AdjacencyList E ,  int start ,int parent) {
         layer[start] = currentLayer;
         minAncestor[start] = currentLayer;
         currentLayer++;
         inStack[start] = true;
-        order.add(start);
+        //The dfs part of the algorithm
         for (int i : E.get(start)) {
+//critical step
+            if(i==parent){
+continue;
+            }
             // if can continue search (the next node is not searched before)
             if (layer[i] == 0) {
-                Tarjan(E,i);
+                // search the node and update the minAncestor of the currentnode
+                Tarjan(E,i,start);
                 minAncestor[start] = Math.min(minAncestor[i], minAncestor[start]);
+                // if the child node cannot return to the parent node
                 if(minAncestor[i] > layer[start]){
-                    bridges.add(new int[]{start,i});
+                    // add the edge and bridge
+                    LinkedList<Integer> temp=new LinkedList<Integer>();
+                    temp.add(start);
+                    temp.add(i);
+                    bridges.add(temp);
                 }
             }
-            // if the node have beed searched before (the next node is in the stack)
-            else if (inStack[i]) {
+            // if the node have been searched before (the next node is in the stack)
+           else if (inStack[i]) {
+               //update the miniAncestor of childnode and continue searching
                 minAncestor[start] = Math.min(minAncestor[start], layer[i]);
             }
            
         }
+        inStack[start] = false;
     }
-
 
     private int N;
     private int E;
@@ -90,8 +100,8 @@ public class H01307 {
         N = Integer.parseInt(st.nextToken());
         E= Integer.parseInt(st.nextToken());
         map = new AdjacencyList(N);
-       
         // loop of trials
+        while (N!=0&&E!=0){
         for (int i=0;i<E;i++) {
             // loop of start points
             st = new StringTokenizer(br.readLine());
@@ -100,15 +110,26 @@ public class H01307 {
              map.add(startpoint, endpoint);
             map.add(endpoint, startpoint);
         }
-        st = new StringTokenizer(br.readLine());
         layer = new int[N];
         minAncestor = new int[N];
         inStack = new boolean[N];
-        Tarjan(map, 0);
+        for(int i=0;i<N;i++){
+            if (layer[i] == 0) {
+            Tarjan(map, i,-1);
+            }
+        }
         //printarr(layer);
         //printarr(minAncestor);
         //System.out.println(bridges.size());
-        System.out.println(E-bridges.size());
+        System.out.println(bridges.size());
+        st = new StringTokenizer(br.readLine());
+        if(!st.hasMoreTokens()){
+continue;
+        }
+        N = Integer.parseInt(st.nextToken());
+        E= Integer.parseInt(st.nextToken());
+        map = new AdjacencyList(N);
+    }
     }
     public void printarr(int[] arr) {
         StringBuilder sb = new StringBuilder();
