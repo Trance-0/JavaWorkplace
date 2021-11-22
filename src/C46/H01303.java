@@ -143,9 +143,12 @@ public class DisjointSet{
 
         public ForwardStar removeInactive(){
             ForwardStar result=new ForwardStar(V, E-inActiveCount, directed);
-            //for(){
-// TODO
-           // }
+            for(int i=0;i<V;i++){
+                LinkedList<int[]>tempEdges=this.get(i);
+                for(int[] j:tempEdges){
+                    result.add(j[0], j[1], j[2]);
+                }
+            }
             return result;
         }
 
