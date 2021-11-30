@@ -16,6 +16,7 @@ public class H01303 {
 
     /* full version of disjoint set */
 public class DisjointSet{
+
     int[] parentNode;
     public DisjointSet(int size){
        parentNode=new int[size];
@@ -36,7 +37,8 @@ public class DisjointSet{
        return findParent(a)==findParent(b);
     } 
  }
-    public class ForwardStar {
+
+ public class ForwardStar {
         public class edge {
             private int to, nexthead, weight, id;
         }
