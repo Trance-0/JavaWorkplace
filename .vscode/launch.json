@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Launch G2",
+            "request": "launch",
+            "mainClass": "ThirdContest.G2",
+            "projectName": "USACO"
+        },
+        {
+            "type": "java",
             "name": "Launch Main",
             "request": "launch",
             "mainClass": "USACO/C46.Main",
